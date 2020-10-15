@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.todolist.Main.GroupsViewModel;
 import com.example.todolist.Main.GroupsViewModelFactory;
@@ -57,27 +58,34 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_today, container, false);
         initialize();
+        showTodayGroups();
         return rootView;
     }
 
-    private void initialize(){
+    private void initialize() {
         recyclerView = rootView.findViewById(R.id.rc_GroupListToday);
         emptyStateToday = rootView.findViewById(R.id.emptyStateToday);
+    }
 
-                GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()))).get(GroupsViewModel.class);
-        groupsViewModel.getGroupsToday().observe(getViewLifecycleOwner(), t->{
+    private void showTodayGroups() {
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 1)).get(GroupsViewModel.class);
+        groupsViewModel.getGroupsToday().observe(getViewLifecycleOwner(), t -> {
 
-            if (t.size() < 1){
+            if (t.size() < 1) {
                 emptyStateToday.setVisibility(View.VISIBLE);
-            }else {
-                Log.e("Day", "initialize: " );
+            } else {
+                Log.e("Day", "initialize: ");
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
                 recyclerView.setLayoutManager(mLayoutManager);
-            //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
+                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
                 todayGroupsAdapter = new TodayGroupsAdapter(t);
                 recyclerView.setAdapter(todayGroupsAdapter);
             }
 
+        });
+
+        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
+            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
         });
     }
 

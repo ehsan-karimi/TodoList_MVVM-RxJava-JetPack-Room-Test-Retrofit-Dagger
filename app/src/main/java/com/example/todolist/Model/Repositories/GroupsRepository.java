@@ -9,6 +9,7 @@ import com.example.todolist.Model.RemoteDataSource.Api_Interface;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class GroupsRepository {
     private GroupsDao groupsDao;
@@ -38,6 +39,10 @@ public class GroupsRepository {
 
     public LiveData<List<Groups>> getGroupsMonth(){
         return groupsDao.getGroupsMonth();
+    }
+
+    public Completable saveGroup(Groups groups){
+        return groupsDao.insertGroups(groups);
     }
 
 }

@@ -3,11 +3,23 @@ package com.example.todolist.Main.Month;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.todolist.Main.GroupsViewModel;
+import com.example.todolist.Main.GroupsViewModelFactory;
+import com.example.todolist.Main.Today.TodayGroupsAdapter;
+import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
+import com.example.todolist.Model.RemoteDataSource.RetrofitConfig.Api_ServiceProvider;
+import com.example.todolist.Model.Repositories.GroupsRepository;
 import com.example.todolist.R;
 
 /**
@@ -16,6 +28,11 @@ import com.example.todolist.R;
  * create an instance of this fragment.
  */
 public class MonthFragment extends Fragment {
+
+    private View rootView;
+    private RecyclerView recyclerView;
+    private MonthGroupsAdapter monthGroupsAdapter;
+    private LinearLayout emptyStateMonth;
 
     public static MonthFragment newInstance(String text) {
         MonthFragment f = new MonthFragment();
@@ -40,6 +57,39 @@ public class MonthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_month, container, false);
+        rootView = inflater.inflate(R.layout.fragment_month, container, false);
+        initialize();
+        showMonthGroups();
+        return rootView;
     }
+
+    private void initialize() {
+        emptyStateMonth = rootView.findViewById(R.id.emptyStateMonth);
+        recyclerView = rootView.findViewById(R.id.rc_GroupListMonth);
+
+
+    }
+
+    private void showMonthGroups() {
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 0)).get(GroupsViewModel.class);
+        groupsViewModel.getGroupsMonth().observe(getViewLifecycleOwner(), t -> {
+
+            if (t.size() < 1) {
+                emptyStateMonth.setVisibility(View.VISIBLE);
+            } else {
+                Log.e("Month", "initialize: ");
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
+                monthGroupsAdapter = new MonthGroupsAdapter(t);
+                recyclerView.setAdapter(monthGroupsAdapter);
+            }
+
+        });
+
+        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
+            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
+        });
+    }
+
 }

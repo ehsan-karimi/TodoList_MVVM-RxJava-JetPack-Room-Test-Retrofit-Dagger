@@ -19,27 +19,29 @@ public class GroupsViewModel extends ViewModel {
     private Disposable disposable;
     private GroupsRepository groupsRepository;
 
-    public GroupsViewModel(GroupsRepository groupsRepository) {
+    public GroupsViewModel(GroupsRepository groupsRepository, int firstRequest) {
         this.groupsRepository = groupsRepository;
-        groupsRepository.refreshGroups()
-                .subscribeOn(Schedulers.io())
-                //         .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable = d;
-                    }
+        if (firstRequest == 1){
+            groupsRepository.refreshGroups()
+                    .subscribeOn(Schedulers.io())
+                    //         .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            disposable = d;
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onComplete() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        error.postValue(e.getMessage());
-                    }
-                });
+                        @Override
+                        public void onError(Throwable e) {
+                            error.postValue(e.getMessage());
+                        }
+                    });
+        }
     }
 
     public LiveData<List<Groups>> getGroupsToday() {

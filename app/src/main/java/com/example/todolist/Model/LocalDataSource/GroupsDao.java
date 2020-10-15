@@ -12,6 +12,8 @@ import com.example.todolist.Model.Entities.Groups;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 @Dao
 public interface GroupsDao {
     @Query("SELECT * FROM tbl_groups")
@@ -30,7 +32,7 @@ public interface GroupsDao {
     void insertGroupsList(List<Groups> groups);
 
     @Insert()
-    void insertGroups(Groups groups);
+    Completable insertGroups(Groups groups);
 
     @Update
     int updateGroups(Groups groups);

@@ -9,6 +9,7 @@ import com.example.todolist.Model.Repositories.GroupsRepository;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -16,34 +17,14 @@ import io.reactivex.schedulers.Schedulers;
 public class AddTaskGroupViewModel extends ViewModel {
 
     private MutableLiveData<String> error = new MutableLiveData<>();
-    private Disposable disposable;
     private GroupsRepository groupsRepository;
 
     public AddTaskGroupViewModel(GroupsRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
-        groupsRepository.refreshGroups()
-                .subscribeOn(Schedulers.io())
-       //         .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable = d;
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        error.postValue(e.getMessage());
-                    }
-                });
     }
 
-    public LiveData<List<Groups>> getGroups() {
-        return groupsRepository.getGroups();
+    public Completable saveGroup(Groups groups) {
+        return groupsRepository.saveGroup(groups).doOnError(e->{error.postValue("Failed to insert");});
     }
 
     public LiveData<String> getError() {
@@ -53,6 +34,5 @@ public class AddTaskGroupViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposable.dispose();
     }
 }

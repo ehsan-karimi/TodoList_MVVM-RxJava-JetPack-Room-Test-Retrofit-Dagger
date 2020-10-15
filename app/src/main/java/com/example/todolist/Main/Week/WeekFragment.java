@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.todolist.AddGroups.AddTaskGroupViewModel;
 import com.example.todolist.AddGroups.AddTaskGroupViewModelFactory;
@@ -57,6 +59,7 @@ public class WeekFragment extends Fragment {
     private RecyclerView recyclerView;
     private View rootView;
     private WeekGroupsAdapter weekGroupsAdapter;
+    private LinearLayout emptyStateWeek;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,19 +67,31 @@ public class WeekFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_week, container, false);
         initialize();
-
+        showWeekGroups();
         return rootView;
     }
 
-    private void initialize(){
+    private void initialize() {
         recyclerView = rootView.findViewById(R.id.taskListRv);
-        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(),Api_ServiceProvider.getApi_interface()))).get(GroupsViewModel.class);
-        groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t->{
-            Log.e("Week", "initialize: " );
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-            recyclerView.setLayoutManager(mLayoutManager);
-            weekGroupsAdapter = new WeekGroupsAdapter(t);
-            recyclerView.setAdapter(weekGroupsAdapter);
+        emptyStateWeek = rootView.findViewById(R.id.emptyStateWeek);
+    }
+
+    private void showWeekGroups(){
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 0)).get(GroupsViewModel.class);
+        groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t -> {
+            if (t.size() < 1) {
+                emptyStateWeek.setVisibility(View.VISIBLE);
+            } else {
+                Log.e("Week", "initialize: ");
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+                recyclerView.setLayoutManager(mLayoutManager);
+                weekGroupsAdapter = new WeekGroupsAdapter(t);
+                recyclerView.setAdapter(weekGroupsAdapter);
+            }
+        });
+
+        groupsViewModel.getError().observe(getViewLifecycleOwner(), e ->{
+            Toast.makeText(rootView.getContext(),"Failed Sync Your Groups!!!",Toast.LENGTH_LONG).show();
         });
     }
 

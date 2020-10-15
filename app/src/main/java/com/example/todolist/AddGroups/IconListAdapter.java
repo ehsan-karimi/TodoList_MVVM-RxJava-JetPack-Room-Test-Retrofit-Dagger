@@ -1,6 +1,7 @@
 package com.example.todolist.AddGroups;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,14 @@ import java.util.List;
 public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.EmployeeViewHolder> {
     private List<Icons> employeeModel;
 
+    //declare interface
+    private OnItemClicked onClick;
+
+    //make interface like this
+    public interface OnItemClicked {
+        void onItemClick(int id);
+    }
+
     public IconListAdapter(List<Icons> employeeModel) {
         this.employeeModel = employeeModel;
     }
@@ -34,9 +43,13 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
         notifyItemInserted(0);
     }
 
+    int row;
+
     @Override
     public void onBindViewHolder(@NonNull EmployeeViewHolder holder, int position) {
-        holder.bind(employeeModel.get(position));
+        holder.bind(employeeModel.get(position), position);
+
+
     }
 
     @Override
@@ -51,28 +64,31 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
-
-           icon = itemView.findViewById(R.id.icon);
-
-
-
-//            cardView = itemView.findViewById(R.id.card);
-//
-//            cardView.setOnClickListener(v->{
-//                Intent intent = new Intent(itemView.getContext(),InsideTodayActivity.class);
-//                itemView.getContext().startActivity(intent);
-//            });
-
+            icon = itemView.findViewById(R.id.icon);
+            cardView = itemView.findViewById(R.id.card);
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(Icons employeeModel) {
-//            fullNameTv.setText(employeeModel.getFirstname() + " " + employeeModel.getLastname());
-//            courseTitleTv.setText(employeeModel.getLastname());
-//            scoreTv.setText(String.valueOf(employeeModel.getPhonenumber()));
-//            firstCharacterTv.setText(employeeModel.getId());
-            icon.setImageResource(employeeModel.getId());
+        public void bind(Icons icons, int position) {
+            icon.setImageResource(icons.getId());
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    row = position;
+                    notifyDataSetChanged();
+                }
+            });
+            if (row == position) {
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.colorCountTaskEvents));
+            } else {
+                cardView.setBackgroundColor(Color.WHITE);
+            }
         }
+    }
+
+    public void setOnClick(OnItemClicked onClick) {
+        this.onClick = onClick;
     }
 }
 
