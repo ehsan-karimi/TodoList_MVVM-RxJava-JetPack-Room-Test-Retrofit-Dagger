@@ -7,7 +7,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="160dp"
         android:layout_height="160dp"
-        app:cardElevation="2dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -41,8 +43,8 @@
                 android:layout_below="@id/itemGroupTask_TvTaskName"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/colorCountTaskEvents"
-                android:text="@string/app_name" />
+                android:text="@string/app_name"
+                android:textColor="@color/colorCountTaskEvents" />
 
         </RelativeLayout>
 

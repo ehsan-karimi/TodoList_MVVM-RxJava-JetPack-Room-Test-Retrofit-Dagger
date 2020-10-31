@@ -1,3 +1,133 @@
 <resources>
     <string name="app_name">TodoList</string>
+
+    <string name="json">[
+    {
+        "id": "1",
+        "firstname": "Ali",
+        "lastname": "Ahmadi",
+        "phonenumber": "915563254"
+    },
+    {
+        "id": "2",
+        "firstname": "Ehsan",
+        "lastname": "Amiri",
+        "phonenumber": "936820116"
+    },
+    {
+        "id": "3",
+        "firstname": "Mohsen",
+        "lastname": "Eskandari",
+        "phonenumber": "937852417"
+    },
+    {
+        "id": "4",
+        "firstname": "Mehrad",
+        "lastname": "Alinia",
+        "phonenumber": "952842145"
+    },
+    {
+        "id": "5",
+        "firstname": "Peyman",
+        "lastname": "Golabi",
+        "phonenumber": "922820114"
+    },
+    {
+        "id": "6",
+        "firstname": "Sara",
+        "lastname": "Afkhami",
+        "phonenumber": "988820111"
+    },
+    {
+        "id": "7",
+        "firstname": "Negar",
+        "lastname": "Dolati",
+        "phonenumber": "935720118"
+    },
+    {
+        "id": "8",
+        "firstname": "Bahar",
+        "lastname": "Karimi",
+        "phonenumber": "944522877"
+    },
+    {
+        "id": "9",
+        "firstname": "Fateme",
+        "lastname": "Hashemi",
+        "phonenumber": "799214859"
+    },
+    {
+        "id": "10",
+        "firstname": "Nazanin",
+        "lastname": "Bagheri",
+        "phonenumber": "855425631"
+    },
+    {
+        "id": "11",
+        "firstname": "Elham",
+        "lastname": "Naderi",
+        "phonenumber": "933256478"
+    },
+    {
+        "id": "12",
+        "firstname": "Sahar",
+        "lastname": "Shahini",
+        "phonenumber": "975216354"
+    },
+    {
+        "id": "15",
+        "firstname": "Ehsan",
+        "lastname": "Karimi",
+        "phonenumber": "878787877"
+    },
+    {
+        "id": "21",
+        "firstname": "ghfhjgj",
+        "lastname": "hfhgf",
+        "phonenumber": "2626"
+    },
+    {
+        "id": "22",
+        "firstname": "knllkn",
+        "lastname": "xvcxvc",
+        "phonenumber": "87878"
+    },
+    {
+        "id": "23",
+        "firstname": "ljkjkbh",
+        "lastname": "fdgff",
+        "phonenumber": "21323"
+    },
+    {
+        "id": "24",
+        "firstname": "asddgf",
+        "lastname": "sdfsd34534",
+        "phonenumber": "345345"
+    },
+    {
+        "id": "25",
+        "firstname": "frwef",
+        "lastname": "ewfdsf",
+        "phonenumber": "435321"
+    },
+    {
+        "id": "26",
+        "firstname": "frwef",
+        "lastname": "ewfdsf",
+        "phonenumber": "435321"
+    },
+    {
+        "id": "27",
+        "firstname": "sdfsh",
+        "lastname": "sdfsdf",
+        "phonenumber": "3453"
+    },
+    {
+        "id": "28",
+        "firstname": "dfgsdf",
+        "lastname": "ewerwe",
+        "phonenumber": "235324"
+    }
+]</string>
+
 </resources>
