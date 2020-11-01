@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TodoList</string>
 
+    <string name="icon">[{"id": 2131165300}]</string>
+
     <string name="json">[
     {
         "id": "1",

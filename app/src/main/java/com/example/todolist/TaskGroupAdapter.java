@@ -1,24 +1,25 @@
 package com.example.todolist;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.EmployeeViewHolder> {
+public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.EmployeeViewHolder> {
     private List<TaskEntity> employeeModel;
 
-    public TaskAdapter(List<TaskEntity> employeeModel) {
+    public TaskGroupAdapter(List<TaskEntity> employeeModel) {
         this.employeeModel = employeeModel;
     }
 
@@ -49,6 +50,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.EmployeeViewHo
 //        private TextView scoreTv;
 //        private TextView firstCharacterTv;
         private ProgressBar progressBar;
+        private MaterialCardView cardView;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,7 +61,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.EmployeeViewHo
             progressBar = itemView.findViewById(R.id.my_progressBar);
            // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
        //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
-            progressBar.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+            progressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+
+            cardView = itemView.findViewById(R.id.card);
+
+            cardView.setOnClickListener(v->{
+                Intent intent = new Intent(itemView.getContext(),InsideTodayActivity.class);
+                itemView.getContext().startActivity(intent);
+            });
 
         }
 

@@ -5,16 +5,20 @@
     android:layout_height="190dp">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+        android:clickable="true"
+        android:longClickable="true"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"

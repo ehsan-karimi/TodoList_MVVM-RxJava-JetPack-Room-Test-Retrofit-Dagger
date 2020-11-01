@@ -10,8 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
-        android:background="@color/colorBackgroundMainActivity">
+        android:background="@color/colorBackgroundMainActivity"
+        app:elevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,18 +36,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
-<!--        >-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:orientation="vertical"
-       >
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <TextView
             style="@style/h1"
@@ -55,75 +49,64 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:text="Hey Matt,"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="16dp"
+            android:text="Group Name"
             android:textColor="@color/textColorUserName" />
 
         <TextView
             style="@style/h2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="12dp"
             android:paddingBottom="16dp"
-            android:text="this is your to-do list."
-            android:textColor="@color/textColorUserName" />
+            android:text="8 task"
+            android:textColor="@color/colorCountTaskEvents" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:background="@color/colorBackgroundMainActivity"
-            app:tabIndicatorColor="@color/colorTabIndicator"
-            app:tabTextColor="@color/textColorUserName"
+        <TextView
+            style="@style/h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="64dp"
-            app:tabIndicatorFullWidth="true"
-            app:tabTextAppearance="@style/h4"
-            style="@style/Widget.MaterialComponents.TabLayout.PrimarySurface"
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_marginTop="24dp"
+            android:paddingBottom="16dp"
+            android:text="Today"
+            android:textColor="@color/colorCountTaskEvents" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginStart="16dp"
-            android:background="@color/colorCountTaskEvents" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/taskListRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:clipToPadding="false"
+            android:paddingStart="24dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp" />
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/taskListRv"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:clipToPadding="false"-->
-<!--            android:paddingStart="12dp"-->
-<!--            android:paddingTop="8dp"-->
-<!--            android:paddingEnd="12dp"-->
-<!--            android:paddingBottom="4dp" />-->
+
+
 
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extended_fab"
+        android:id="@+id/extended_fab_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_gravity="bottom|right"
-        android:text="add group"
-        app:cornerRadius="2dp"
+        android:layout_margin="16dp"
         android:background="#76FF03"
-        app:rippleColor="#76FF03"
-        app:strokeColor="#76FF03"
-        app:backgroundTint="@color/colorTabIndicator"
-        app:iconTint="@color/colorBackgroundMainActivity"
-        android:textColor="@color/colorBackgroundMainActivity"
+        android:text="add task"
         android:textAppearance="@style/h4"
-        app:icon="@drawable/ic_baseline_add_24"/>
-
-
-<!--    </androidx.core.widget.NestedScrollView>-->
+        android:textColor="@color/colorBackgroundMainActivity"
+        app:backgroundTint="@color/colorTabIndicator"
+        app:cornerRadius="2dp"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconTint="@color/colorBackgroundMainActivity"
+        app:rippleColor="#76FF03"
+        app:strokeColor="#76FF03" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

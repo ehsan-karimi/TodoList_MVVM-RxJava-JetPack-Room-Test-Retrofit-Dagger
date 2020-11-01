@@ -10,10 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
@@ -23,16 +28,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-
-
-
     public static ViewPager2 viewPager;
     // The pager adapter, which provides the pages to the view pager widget.
     private FragmentStateAdapter pagerAdapter;
     // Arrey of strings FOR TABS TITLES
     private String[] titles = new String[]{"TODAY", "WEEK", "MONTH"};
 // tab titles
+    private ExtendedFloatingActionButton floatingActionButton;
 
 
     @Override
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
+
+        int j = R.drawable.ic_github;
+        Log.e("For Me:", "onCreate: " + String.valueOf(j) );
     }
 
     private void initialize() {
@@ -48,15 +53,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         pagerAdapter = new MyPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+        floatingActionButton = findViewById(R.id.extended_fab);
+        floatingActionButton.setOnClickListener(v->{
+            Intent intent = new Intent(MainActivity.this,AddTaskGroupActivity.class);
+            startActivity(intent);
+        });
 //inflating tab layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 //displaying tabs
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(titles[position])).attach();
     }
-
-
-
-
 
 
     @Override

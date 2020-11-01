@@ -44,7 +44,7 @@ public class WeekFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private View rootView;
-    private TaskAdapter taskAdapter;
+    private TaskGroupAdapter taskGroupAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +69,8 @@ public class WeekFragment extends Fragment {
         //  recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        taskAdapter = new TaskAdapter(taskEntityList);
-        recyclerView.setAdapter(taskAdapter);
+        taskGroupAdapter = new TaskGroupAdapter(taskEntityList);
+        recyclerView.setAdapter(taskGroupAdapter);
     }
 
 }
