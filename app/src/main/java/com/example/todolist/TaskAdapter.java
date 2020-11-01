@@ -1,12 +1,16 @@
 package com.example.todolist;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -44,6 +48,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.EmployeeViewHo
 //        private TextView courseTitleTv;
 //        private TextView scoreTv;
 //        private TextView firstCharacterTv;
+        private ProgressBar progressBar;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +56,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.EmployeeViewHo
 //            courseTitleTv = itemView.findViewById(R.id.tv_student_course);
 //            scoreTv = itemView.findViewById(R.id.tv_student_score);
 //            firstCharacterTv = itemView.findViewById(R.id.tv_student_firstCharacter);
+            progressBar = itemView.findViewById(R.id.my_progressBar);
+           // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
+       //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
+            progressBar.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+
         }
 
         @SuppressLint("SetTextI18n")

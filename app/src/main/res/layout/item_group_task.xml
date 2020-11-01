@@ -2,14 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="180dp"
-    android:layout_height="180dp">
+    android:layout_height="190dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -18,6 +19,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_height="5dp"
+                android:layout_width="match_parent"
+                android:id="@+id/my_progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:theme="@style/AppTheme.WhiteAccent"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="30"/>
 
             <ImageView
                 android:id="@+id/itemGroupTask_Icon"
