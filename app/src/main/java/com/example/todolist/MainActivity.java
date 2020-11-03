@@ -1,30 +1,21 @@
 package com.example.todolist;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.google.android.material.checkbox.MaterialCheckBox;
+import com.example.todolist.AddGroups.AddTaskGroupActivity;
+import com.example.todolist.Room_test.AppExecutors;
+import com.example.todolist.Room_test.Person;
+import com.example.todolist.Room_test.PersonDao;
+import com.example.todolist.Room_test.PersonDatabase;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 // tab titles
     private ExtendedFloatingActionButton floatingActionButton;
 
+  //  private PersonDatabase personDatabase ;
+
+    private PersonDao personDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +38,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialize();
 
-        int j = R.drawable.ic_github;
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+              //  personDatabase = PersonDatabase.getInstance(MainActivity.this);
+             //   Person person = new Person(1,"Ali","Mashhad");
+////                personDatabase.personDao().insertPerson(person);
+             //   Log.e("DataBase:", personDatabase.personDao().getPerson().get(0).getName() );
+             //   int a = personDatabase.personDao().updatePerson(person);
+             //   Log.e("Update:", String.valueOf(a));
+            //    Log.e("DataBase:", personDatabase.personDao().getPerson().get(0).getName() );
+            }
+        });
+
+
+
+        int j = R.drawable.ic_home;
         Log.e("For Me:", "onCreate: " + String.valueOf(j) );
+
+        int j2 = R.drawable.ic_mortarboard;
+        Log.e("For Me:", "onCreate: " + String.valueOf(j2) );
+
+        int j3 = R.drawable.ic_note;
+        Log.e("For Me:", "onCreate: " + String.valueOf(j3) );
+
+        int j4 = R.drawable.ic_suitcase;
+        Log.e("For Me:", "onCreate: " + String.valueOf(j4) );
+
+
+        int j5 = R.drawable.ic_trophy;
+        Log.e("For Me:", "onCreate: " + String.valueOf(j5) );
     }
 
     private void initialize() {
@@ -55,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         floatingActionButton = findViewById(R.id.extended_fab);
         floatingActionButton.setOnClickListener(v->{
-            Intent intent = new Intent(MainActivity.this,AddTaskGroupActivity.class);
+            Intent intent = new Intent(MainActivity.this, AddTaskGroupActivity.class);
             startActivity(intent);
         });
 //inflating tab layout
@@ -76,5 +99,7 @@ public class MainActivity extends AppCompatActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
+
+
 
 }

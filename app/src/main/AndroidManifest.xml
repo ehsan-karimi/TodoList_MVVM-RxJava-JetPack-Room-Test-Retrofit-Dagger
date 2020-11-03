@@ -19,7 +19,7 @@
 
         <activity android:name=".InsideTodayActivity"/>
 
-        <activity android:name=".AddTaskGroupActivity"/>
+        <activity android:name=".AddGroups.AddTaskGroupActivity"/>
 
     </application>
 
