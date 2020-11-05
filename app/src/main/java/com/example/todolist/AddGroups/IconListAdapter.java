@@ -1,18 +1,16 @@
-package com.example.todolist;
+package com.example.todolist.AddGroups;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.Model.IconListModel;
+import com.example.todolist.R;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;

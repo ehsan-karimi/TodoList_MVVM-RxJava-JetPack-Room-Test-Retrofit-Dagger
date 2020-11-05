@@ -1,14 +1,14 @@
-package com.example.todolist.AddGroups;
+package com.example.todolist.Model;
 
-import android.content.Context;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Model.Groups;
-import com.example.todolist.Model.GroupsRepository;
+import com.example.todolist.Model.Room.GroupsDao;
 import com.example.todolist.Network.Api_Interface;
+import com.example.todolist.Network.Api_Service;
 
 import java.util.List;
 
@@ -17,15 +17,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddTaskGroupViewModel extends ViewModel {
-
+public class GroupsRepository {
+    private GroupsDao groupsDao;
     private Api_Interface api_interface;
-    private MutableLiveData<List<Groups>> groups = new MutableLiveData<>();
-    private MutableLiveData<String> error = new MutableLiveData<>();
 
-    public AddTaskGroupViewModel(Api_Interface api_interface) {
+    public GroupsRepository(GroupsDao groupsDao, Api_Interface api_interface) {
+        this.groupsDao = groupsDao;
         this.api_interface = api_interface;
+    }
 
+
+    public void RefreshGroups() {
         api_interface.get_GroupList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,21 +39,18 @@ public class AddTaskGroupViewModel extends ViewModel {
 
                     @Override
                     public void onSuccess(List<Groups> groupsList) {
-                        groups.setValue(groupsList);
+                        groupsDao.insertGroupsList(groupsList);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        error.setValue(e.getMessage());
+
                     }
                 });
     }
 
-    public LiveData<List<Groups>> getGroups() {
-        return groups;
+    public LiveData<List<Groups>> GetGroups() {
+        return groupsDao.getGroups();
     }
 
-    public LiveData<String> getError() {
-        return error;
-    }
 }

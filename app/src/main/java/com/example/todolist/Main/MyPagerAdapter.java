@@ -1,8 +1,12 @@
-package com.example.todolist;
+package com.example.todolist.Main;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.todolist.Main.MonthFragment;
+import com.example.todolist.Main.TodayFragment;
+import com.example.todolist.Main.WeekFragment;
 
 public class MyPagerAdapter extends FragmentStateAdapter {
 

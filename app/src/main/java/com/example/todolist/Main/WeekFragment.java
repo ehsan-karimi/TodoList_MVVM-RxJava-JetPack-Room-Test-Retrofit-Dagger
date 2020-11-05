@@ -1,15 +1,26 @@
-package com.example.todolist;
+package com.example.todolist.Main;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.todolist.AddGroups.AddTaskGroupViewModel;
+import com.example.todolist.AddGroups.AddTaskGroupViewModelFactory;
+import com.example.todolist.Model.GroupsRepository;
+import com.example.todolist.Model.Room.GroupsDao;
+import com.example.todolist.Model.Room.PersonDatabase;
+import com.example.todolist.Network.Api_ServiceProvider;
+import com.example.todolist.R;
+import com.example.todolist.Model.TaskEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,6 +71,11 @@ public class WeekFragment extends Fragment {
 
     private void initialize(){
         recyclerView = rootView.findViewById(R.id.taskListRv);
+        AddTaskGroupViewModel taskGroupViewModel = new ViewModelProvider(this, new AddTaskGroupViewModelFactory()).get(AddTaskGroupViewModel.class);
+        taskGroupViewModel.getGroups().observe(getViewLifecycleOwner(), t->{
+            Log.e("Fragment:", "initialize: " + t.get(0).getLabel() );
+        });
+//        Log.e("Fragment:", "initialize: " + taskGroupViewModel.getGroups().getValue().get(0).getLabel() );
     }
 
     private void showList(String result) {

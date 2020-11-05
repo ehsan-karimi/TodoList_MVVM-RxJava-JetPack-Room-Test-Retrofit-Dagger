@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.IconListAdapter;
-import com.example.todolist.IconListModel;
+import com.example.todolist.Model.IconListModel;
 import com.example.todolist.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

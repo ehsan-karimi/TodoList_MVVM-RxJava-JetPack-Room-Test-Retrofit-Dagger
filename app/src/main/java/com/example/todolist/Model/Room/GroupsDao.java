@@ -1,4 +1,4 @@
-package com.example.todolist.Model;
+package com.example.todolist.Model.Room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.todolist.Model.Groups;
 import com.example.todolist.Room_test.Person;
 
 import java.util.List;
@@ -14,7 +15,10 @@ import java.util.List;
 @Dao
 public interface GroupsDao {
     @Query("SELECT * FROM tbl_groups")
-    LiveData<List<Person>> getGroups();
+    LiveData<List<Groups>> getGroups();
+
+    @Insert()
+    void insertGroupsList(List<Groups> groups);
 
     @Insert()
     void insertGroups(Groups groups);
@@ -23,5 +27,5 @@ public interface GroupsDao {
     int updateGroups(Groups groups);
 
     @Delete
-    void deleteGroups(Groups groups);
+    int deleteGroups(Groups groups);
 }

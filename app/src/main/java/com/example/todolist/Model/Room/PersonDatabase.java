@@ -1,4 +1,4 @@
-package com.example.todolist.Room_test;
+package com.example.todolist.Model.Room;
 
 import android.content.Context;
 
@@ -7,9 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.todolist.Model.Groups;
-import com.example.todolist.Model.GroupsDao;
+import com.example.todolist.Room_test.Person;
+import com.example.todolist.Room_test.PersonDao;
 
-@Database(entities = {Person.class,Groups.class}, exportSchema = false, version = 1)
+@Database(entities = {Person.class, Groups.class}, exportSchema = false, version = 1)
 public abstract class PersonDatabase extends RoomDatabase {
     private static final String DB_NAME = "person_db";
     private static PersonDatabase instance;

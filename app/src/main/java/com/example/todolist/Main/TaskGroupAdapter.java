@@ -1,6 +1,9 @@
-package com.example.todolist;
+package com.example.todolist.Main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +12,24 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.InsideGroupToday.InsideTodayActivity;
+import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.R;
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
-
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.EmployeeViewHolder> {
+public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.EmployeeViewHolder> {
     private List<TaskEntity> employeeModel;
 
-    public TaskListAdapter(List<TaskEntity> employeeModel) {
+    public TaskGroupAdapter(List<TaskEntity> employeeModel) {
         this.employeeModel = employeeModel;
     }
 
     @NonNull
     @Override
     public EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_task, parent, false));
+        return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_group_task, parent, false));
     }
 
     public void addEmployee(TaskEntity employeeModel) {
@@ -41,11 +48,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
     }
 
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
-        //        private TextView fullNameTv;
+//        private TextView fullNameTv;
 //        private TextView courseTitleTv;
 //        private TextView scoreTv;
 //        private TextView firstCharacterTv;
         private ProgressBar progressBar;
+        private MaterialCardView cardView;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,10 +61,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
 //            courseTitleTv = itemView.findViewById(R.id.tv_student_course);
 //            scoreTv = itemView.findViewById(R.id.tv_student_score);
 //            firstCharacterTv = itemView.findViewById(R.id.tv_student_firstCharacter);
-            //    progressBar = itemView.findViewById(R.id.my_progressBar);
-            // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
-            //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
-            //    progressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+            progressBar = itemView.findViewById(R.id.my_progressBar);
+           // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
+       //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
+            progressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+
+            cardView = itemView.findViewById(R.id.card);
+
+            cardView.setOnClickListener(v->{
+                Intent intent = new Intent(itemView.getContext(), InsideTodayActivity.class);
+                itemView.getContext().startActivity(intent);
+            });
 
         }
 
@@ -69,5 +84,4 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
         }
     }
 }
-
 

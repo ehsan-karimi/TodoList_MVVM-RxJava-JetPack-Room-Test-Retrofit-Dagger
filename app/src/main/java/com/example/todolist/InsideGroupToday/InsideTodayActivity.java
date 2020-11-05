@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.InsideGroupToday;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

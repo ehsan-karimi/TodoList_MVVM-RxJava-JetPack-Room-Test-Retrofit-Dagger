@@ -1,6 +1,7 @@
-package com.example.todolist;
+package com.example.todolist.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -9,10 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.todolist.AddGroups.AddTaskGroupActivity;
+import com.example.todolist.AddGroups.AddTaskGroupViewModel;
+import com.example.todolist.AddGroups.AddTaskGroupViewModelFactory;
+import com.example.todolist.R;
 import com.example.todolist.Room_test.AppExecutors;
-import com.example.todolist.Room_test.Person;
 import com.example.todolist.Room_test.PersonDao;
-import com.example.todolist.Room_test.PersonDatabase;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -37,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
+
+           AddTaskGroupViewModel taskGroupViewModel = new ViewModelProvider(this, new AddTaskGroupViewModelFactory()).get(AddTaskGroupViewModel.class);
+        taskGroupViewModel.getGroups().observe(this, t->{
+            Log.e("Fragment:", "initialize: " + t.get(0).getLabel() );
+        });
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

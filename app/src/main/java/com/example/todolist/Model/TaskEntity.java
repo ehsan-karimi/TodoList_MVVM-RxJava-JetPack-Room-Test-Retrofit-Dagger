@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.Model;
 
 public class TaskEntity {
     private String id;

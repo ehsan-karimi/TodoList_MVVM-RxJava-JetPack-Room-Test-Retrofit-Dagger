@@ -12,7 +12,7 @@ public class Groups {
     private String label;
     private String category;
 
-    public Groups(int id, int icon, String label, String category){
+    public Groups(long id, int icon, String label, String category){
         this.id = id;
         this.icon = icon;
         this.label = label;
