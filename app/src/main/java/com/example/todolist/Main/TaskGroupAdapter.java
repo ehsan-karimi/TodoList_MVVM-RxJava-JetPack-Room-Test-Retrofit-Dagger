@@ -13,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.InsideGroupToday.InsideTodayActivity;
-import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.R;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.EmployeeViewHolder> {
-    private List<TaskEntity> employeeModel;
+    private List<Tasks> employeeModel;
 
-    public TaskGroupAdapter(List<TaskEntity> employeeModel) {
+    public TaskGroupAdapter(List<Tasks> employeeModel) {
         this.employeeModel = employeeModel;
     }
 
@@ -32,7 +32,7 @@ public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.Empl
         return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_group_task, parent, false));
     }
 
-    public void addEmployee(TaskEntity employeeModel) {
+    public void addEmployee(Tasks employeeModel) {
         this.employeeModel.add(0, employeeModel);
         notifyItemInserted(0);
     }
@@ -61,7 +61,7 @@ public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.Empl
 //            courseTitleTv = itemView.findViewById(R.id.tv_student_course);
 //            scoreTv = itemView.findViewById(R.id.tv_student_score);
 //            firstCharacterTv = itemView.findViewById(R.id.tv_student_firstCharacter);
-            progressBar = itemView.findViewById(R.id.my_progressBar);
+            progressBar = itemView.findViewById(R.id.progress_Groups);
            // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
        //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
             progressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
@@ -76,7 +76,7 @@ public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.Empl
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(TaskEntity employeeModel) {
+        public void bind(Tasks employeeModel) {
 //            fullNameTv.setText(employeeModel.getFirstname() + " " + employeeModel.getLastname());
 //            courseTitleTv.setText(employeeModel.getLastname());
 //            scoreTv.setText(String.valueOf(employeeModel.getPhonenumber()));

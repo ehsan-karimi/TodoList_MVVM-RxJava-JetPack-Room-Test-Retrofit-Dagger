@@ -1,6 +1,6 @@
-package com.example.todolist.Model;
+package com.example.todolist.Model.Entities;
 
-public class TaskEntity {
+public class Tasks {
     private String id;
     private String firstname;
     private String lastname;

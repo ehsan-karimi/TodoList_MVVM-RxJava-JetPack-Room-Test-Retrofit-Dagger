@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Model.IconListModel;
+import com.example.todolist.Model.Entities.Icons;
 import com.example.todolist.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,13 +31,13 @@ public class AddTaskGroupActivity extends AppCompatActivity {
     }
 
     private void showList(String result) {
-        java.util.List<IconListModel> iconListModels = new Gson().fromJson(result, new TypeToken<List<IconListModel>>() {
+        java.util.List<Icons> icons = new Gson().fromJson(result, new TypeToken<List<Icons>>() {
         }.getType());
 
 //        recyclerView.setLayoutManager(new LinearLayoutManager(AddTaskGroupActivity.this, RecyclerView.VERTICAL, false));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(AddTaskGroupActivity.this, 5);
         recyclerView.setLayoutManager(mLayoutManager);
-        iconListAdapter = new IconListAdapter(iconListModels);
+        iconListAdapter = new IconListAdapter(icons);
         recyclerView.setAdapter(iconListAdapter);
     }
 }

@@ -1,6 +1,6 @@
-package com.example.todolist.Network;
+package com.example.todolist.Model.RemoteDataSource;
 
-import com.example.todolist.Model.Groups;
+import com.example.todolist.Model.Entities.Groups;
 import com.google.gson.JsonObject;
 
 import java.util.List;

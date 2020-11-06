@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Model.IconListModel;
+import com.example.todolist.Model.Entities.Icons;
 import com.example.todolist.R;
 import com.google.android.material.card.MaterialCardView;
 
@@ -17,9 +17,9 @@ import java.util.List;
 
 
 public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.EmployeeViewHolder> {
-    private List<IconListModel> employeeModel;
+    private List<Icons> employeeModel;
 
-    public IconListAdapter(List<IconListModel> employeeModel) {
+    public IconListAdapter(List<Icons> employeeModel) {
         this.employeeModel = employeeModel;
     }
 
@@ -29,7 +29,7 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
         return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_icon_list, parent, false));
     }
 
-    public void addEmployee(IconListModel employeeModel) {
+    public void addEmployee(Icons employeeModel) {
         this.employeeModel.add(0, employeeModel);
         notifyItemInserted(0);
     }
@@ -66,7 +66,7 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(IconListModel employeeModel) {
+        public void bind(Icons employeeModel) {
 //            fullNameTv.setText(employeeModel.getFirstname() + " " + employeeModel.getLastname());
 //            courseTitleTv.setText(employeeModel.getLastname());
 //            scoreTv.setText(String.valueOf(employeeModel.getPhonenumber()));

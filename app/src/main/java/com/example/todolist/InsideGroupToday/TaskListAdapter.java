@@ -9,16 +9,16 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.R;
 
 import java.util.List;
 
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.EmployeeViewHolder> {
-    private List<TaskEntity> employeeModel;
+    private List<Tasks> employeeModel;
 
-    public TaskListAdapter(List<TaskEntity> employeeModel) {
+    public TaskListAdapter(List<Tasks> employeeModel) {
         this.employeeModel = employeeModel;
     }
 
@@ -28,7 +28,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
         return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_task, parent, false));
     }
 
-    public void addEmployee(TaskEntity employeeModel) {
+    public void addEmployee(Tasks employeeModel) {
         this.employeeModel.add(0, employeeModel);
         notifyItemInserted(0);
     }
@@ -64,7 +64,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(TaskEntity employeeModel) {
+        public void bind(Tasks employeeModel) {
 //            fullNameTv.setText(employeeModel.getFirstname() + " " + employeeModel.getLastname());
 //            courseTitleTv.setText(employeeModel.getLastname());
 //            scoreTv.setText(String.valueOf(employeeModel.getPhonenumber()));

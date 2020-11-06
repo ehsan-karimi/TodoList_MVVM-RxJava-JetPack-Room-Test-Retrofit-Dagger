@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,13 +30,13 @@ public class InsideTodayActivity extends AppCompatActivity {
     }
 
     private void showList(String result) {
-        java.util.List<TaskEntity> taskEntityList = new Gson().fromJson(result, new TypeToken<List<TaskEntity>>() {
+        java.util.List<Tasks> tasksList = new Gson().fromJson(result, new TypeToken<List<Tasks>>() {
         }.getType());
 
           recyclerView.setLayoutManager(new LinearLayoutManager(InsideTodayActivity.this, RecyclerView.VERTICAL, false));
 //        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(InsideTodayActivity.this, 2);
 //        recyclerView.setLayoutManager(mLayoutManager);
-        taskListAdapter = new TaskListAdapter(taskEntityList);
+        taskListAdapter = new TaskListAdapter(tasksList);
         recyclerView.setAdapter(taskListAdapter);
     }
 }

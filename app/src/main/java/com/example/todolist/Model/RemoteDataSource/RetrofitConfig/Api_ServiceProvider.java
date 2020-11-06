@@ -1,4 +1,6 @@
-package com.example.todolist.Network;
+package com.example.todolist.Model.RemoteDataSource.RetrofitConfig;
+
+import com.example.todolist.Model.RemoteDataSource.Api_Interface;
 
 import java.io.IOException;
 
@@ -12,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api_ServiceProvider {
 
+    private static final String BASE_URL = "http://192.168.0.6/PersonToDo/";
     private static Api_Interface api_interface;
 
     public static Api_Interface getApi_interface() {
@@ -34,7 +37,7 @@ public class Api_ServiceProvider {
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("BASE_URL")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)

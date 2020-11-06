@@ -27,7 +27,7 @@
             <ProgressBar
                 android:layout_height="5dp"
                 android:layout_width="match_parent"
-                android:id="@+id/my_progressBar"
+                android:id="@+id/progress_Groups"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:theme="@style/AppTheme.WhiteAccent"
                 android:indeterminate="false"
@@ -35,7 +35,7 @@
                 android:progress="30"/>
 
             <ImageView
-                android:id="@+id/itemGroupTask_Icon"
+                android:id="@+id/iv_TodayGroups"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="16dp"
@@ -43,7 +43,7 @@
                 android:src="@drawable/ic_calendar" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/itemGroupTask_TvTaskName"
+                android:id="@+id/tv_LabelTodayGroups"
                 style="@style/h3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,10 +55,10 @@
                 style="@style/h4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/itemGroupTask_TvTaskName"
+                android:layout_below="@id/tv_LabelTodayGroups"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/app_name"
+                android:text="11 Tasks"
                 android:textColor="@color/colorCountTaskEvents" />
 
         </RelativeLayout>

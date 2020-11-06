@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="Choose day, week or month"
+                android:text="Choose today, week or month"
                 android:textColor="@color/textColorUserName"
                 />
 
@@ -118,7 +118,7 @@
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Day"
+                    android:text="Today"
                     />
 
                 <RadioButton

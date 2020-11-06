@@ -1,9 +1,8 @@
-package com.example.todolist.Main;
+package com.example.todolist.Main.Week;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.todolist.AddGroups.AddTaskGroupViewModel;
 import com.example.todolist.AddGroups.AddTaskGroupViewModelFactory;
-import com.example.todolist.Model.GroupsRepository;
-import com.example.todolist.Model.Room.GroupsDao;
-import com.example.todolist.Model.Room.PersonDatabase;
-import com.example.todolist.Network.Api_ServiceProvider;
+import com.example.todolist.Main.GroupsViewModel;
+import com.example.todolist.Main.GroupsViewModelFactory;
+import com.example.todolist.Main.TaskGroupAdapter;
+import com.example.todolist.Model.Repositories.GroupsRepository;
+import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
+import com.example.todolist.Model.RemoteDataSource.RetrofitConfig.Api_ServiceProvider;
 import com.example.todolist.R;
-import com.example.todolist.Model.TaskEntity;
+import com.example.todolist.Model.Entities.Tasks;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -55,38 +56,28 @@ public class WeekFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private View rootView;
-    private TaskGroupAdapter taskGroupAdapter;
+    private WeekGroupsAdapter weekGroupsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-     //   return inflater.inflate(R.layout.fragment_week, container, false);
         rootView = inflater.inflate(R.layout.fragment_week, container, false);
         initialize();
-        showList(getResources().getString(R.string.json));
-      //  linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout);
+
         return rootView;
     }
 
     private void initialize(){
         recyclerView = rootView.findViewById(R.id.taskListRv);
-        AddTaskGroupViewModel taskGroupViewModel = new ViewModelProvider(this, new AddTaskGroupViewModelFactory()).get(AddTaskGroupViewModel.class);
-        taskGroupViewModel.getGroups().observe(getViewLifecycleOwner(), t->{
-            Log.e("Fragment:", "initialize: " + t.get(0).getLabel() );
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(),Api_ServiceProvider.getApi_interface()))).get(GroupsViewModel.class);
+        groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t->{
+            Log.e("Week", "initialize: " );
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+            recyclerView.setLayoutManager(mLayoutManager);
+            weekGroupsAdapter = new WeekGroupsAdapter(t);
+            recyclerView.setAdapter(weekGroupsAdapter);
         });
-//        Log.e("Fragment:", "initialize: " + taskGroupViewModel.getGroups().getValue().get(0).getLabel() );
-    }
-
-    private void showList(String result) {
-        java.util.List<TaskEntity> taskEntityList = new Gson().fromJson(result, new TypeToken<List<TaskEntity>>() {
-        }.getType());
-
-        //  recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false));
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        taskGroupAdapter = new TaskGroupAdapter(taskEntityList);
-        recyclerView.setAdapter(taskGroupAdapter);
     }
 
 }

@@ -4,14 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Main.TodayFragment">
+    tools:context=".Main.Today.TodayFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_GroupListToday"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp" />
 
     <LinearLayout
-        android:id="@+id/emptyState"
+        android:id="@+id/emptyStateToday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:visibility="visible"
         android:gravity="center_horizontal"
         android:orientation="vertical">

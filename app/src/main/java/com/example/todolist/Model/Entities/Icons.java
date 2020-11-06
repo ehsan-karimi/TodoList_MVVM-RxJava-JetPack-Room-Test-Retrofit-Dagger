@@ -1,8 +1,8 @@
-package com.example.todolist.Model;
+package com.example.todolist.Model.Entities;
 
 import android.graphics.drawable.Drawable;
 
-public class IconListModel {
+public class Icons {
     private int id;
 
 

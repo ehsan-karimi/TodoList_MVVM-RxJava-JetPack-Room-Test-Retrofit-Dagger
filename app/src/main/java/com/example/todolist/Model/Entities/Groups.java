@@ -1,4 +1,4 @@
-package com.example.todolist.Model;
+package com.example.todolist.Model.Entities;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
