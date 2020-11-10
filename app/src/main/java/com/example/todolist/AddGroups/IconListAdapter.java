@@ -71,6 +71,8 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
         @SuppressLint("SetTextI18n")
         public void bind(Icons icons, int position) {
             icon.setImageResource(icons.getId());
+            icon.setTag(icons.getId());
+
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,9 +82,10 @@ public class IconListAdapter extends RecyclerView.Adapter<IconListAdapter.Employ
                 }
             });
             if (row == position) {
-                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.colorCountTaskEvents));
+                cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.colorCountTaskEvents));
+                onClick.onItemClick((Integer) icon.getTag());
             } else {
-                cardView.setBackgroundColor(Color.WHITE);
+                cardView.setCardBackgroundColor(Color.WHITE);
             }
         }
     }

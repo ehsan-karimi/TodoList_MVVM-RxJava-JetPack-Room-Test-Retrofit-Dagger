@@ -1,6 +1,8 @@
 package com.example.todolist.Main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,6 +17,12 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+
 public class MainActivity extends AppCompatActivity {
 
     public static ViewPager2 viewPager;
@@ -22,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private FragmentStateAdapter pagerAdapter;
     // Arrey of strings FOR TABS TITLES
     private String[] titles = new String[]{"TODAY", "WEEK", "MONTH"};
-// tab titles
+    // tab titles
     private ExtendedFloatingActionButton floatingActionButton;
 
-  //  private PersonDatabase personDatabase ;
+    private static final Integer ADD_GROUP_REQUEST_ID = 1001;
 
 
     @Override
@@ -34,42 +42,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialize();
 
-//           AddTaskGroupViewModel taskGroupViewModel = new ViewModelProvider(this, new AddTaskGroupViewModelFactory()).get(AddTaskGroupViewModel.class);
-//        taskGroupViewModel.getGroups().observe(this, t->{
-//            Log.e("Fragment:", "initialize: " + t.get(0).getLabel() );
-//        });
-
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-              //  personDatabase = PersonDatabase.getInstance(MainActivity.this);
-             //   Person person = new Person(1,"Ali","Mashhad");
-////                personDatabase.personDao().insertPerson(person);
-             //   Log.e("DataBase:", personDatabase.personDao().getPerson().get(0).getName() );
-             //   int a = personDatabase.personDao().updatePerson(person);
-             //   Log.e("Update:", String.valueOf(a));
-            //    Log.e("DataBase:", personDatabase.personDao().getPerson().get(0).getName() );
-            }
-        });
-
-
-
         int j = R.drawable.ic_home;
-        Log.e("For Me:", "onCreate: " + String.valueOf(j) );
+        Log.e("For Me:", "onCreate: " + String.valueOf(j));
 
         int j2 = R.drawable.ic_mortarboard;
-        Log.e("For Me:", "onCreate: " + String.valueOf(j2) );
+        Log.e("For Me:", "onCreate: " + String.valueOf(j2));
 
         int j3 = R.drawable.ic_note;
-        Log.e("For Me:", "onCreate: " + String.valueOf(j3) );
+        Log.e("For Me:", "onCreate: " + String.valueOf(j3));
 
         int j4 = R.drawable.ic_suitcase;
-        Log.e("For Me:", "onCreate: " + String.valueOf(j4) );
+        Log.e("For Me:", "onCreate: " + String.valueOf(j4));
 
 
         int j5 = R.drawable.ic_trophy;
-        Log.e("For Me:", "onCreate: " + String.valueOf(j5) );
+        Log.e("For Me:", "onCreate: " + String.valueOf(j5));
+
+
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 
     private void initialize() {
         //recyclerView = findViewById(R.id.taskListRv);
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new MyPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
         floatingActionButton = findViewById(R.id.extended_fab);
-        floatingActionButton.setOnClickListener(v->{
+        floatingActionButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddTaskGroupActivity.class);
             startActivity(intent);
         });
@@ -100,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
-
 
 
 }

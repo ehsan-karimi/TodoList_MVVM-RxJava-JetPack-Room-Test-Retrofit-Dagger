@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:theme="@style/Theme.MaterialComponents.Light"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    android:clickable="true"
-    android:longClickable="true"
-    android:background="@color/textColorUserName"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:focusable="true"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+   android:background="@color/colorBackgroundMainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <com.google.android.material.card.MaterialCardView-->
-<!--        android:id="@+id/card"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:theme="@style/Theme.MaterialComponents.Light"-->
-<!--        app:cardCornerRadius="8dp"-->
-<!--        app:cardElevation="4dp"-->
-<!--        android:clickable="true"-->
-<!--        android:longClickable="true"-->
-<!--        android:background="@color/textColorUserName"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:focusable="true">-->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:clickable="true"
+        android:longClickable="true"
+        app:cardBackgroundColor="@color/blue"
+        android:background="@color/textColorUserName"
+        android:focusable="true">
 
     <ImageView
         android:id="@+id/icon"
@@ -44,6 +31,6 @@
         android:src="@drawable/ic_github"
         />
 
-<!--    </com.google.android.material.card.MaterialCardView>-->
+    </com.google.android.material.card.MaterialCardView>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

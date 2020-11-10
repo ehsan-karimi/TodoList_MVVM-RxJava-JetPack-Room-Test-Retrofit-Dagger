@@ -1,10 +1,13 @@
 package com.example.todolist.Model.Repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.LocalDataSource.GroupsDao;
 import com.example.todolist.Model.RemoteDataSource.Api_Interface;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -43,6 +46,14 @@ public class GroupsRepository {
 
     public Completable saveGroup(Groups groups){
         return groupsDao.insertGroups(groups);
+    }
+
+    public Single<Groups> getLastGroup(){
+        return groupsDao.getLastGroup();
+    }
+
+    public Completable syncGroup(JsonObject groups){
+        return api_interface.add_Group(groups).ignoreElement();
     }
 
 }
