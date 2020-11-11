@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundMainActivity"
-       >
+        android:background="@color/colorBackgroundMainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -22,6 +22,7 @@
                 android:layout_height="56dp">
 
                 <ImageButton
+                    android:id="@+id/ib_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -43,104 +44,96 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            >
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                style="@style/h1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="Add new group"
-                android:textColor="@color/textColorUserName" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textField"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="label">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
+                    style="@style/h1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Add new group"
+                    android:textColor="@color/textColorUserName" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textField"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="50"
-                    android:id="@+id/ed_label"
-                    />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="label">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="50" />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/h1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:text="Choose icon"
-                android:textColor="@color/textColorUserName"
-                />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/iconList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingStart="24dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="4dp" />
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/h1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Choose icon"
+                    android:textColor="@color/textColorUserName" />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/h1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:text="Choose today, week or month"
-                android:textColor="@color/textColorUserName"
-                />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:paddingTop="16dp"
-                android:paddingStart="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rd_Today"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/iconList"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Today"
-                    />
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="4dp" />
 
-                <RadioButton
-                    android:id="@+id/rd_Week"
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/h1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Choose today, week or month"
+                    android:textColor="@color/textColorUserName" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Week"
-                    />
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
 
-                <RadioButton
-                    android:id="@+id/rd_Month"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Month"
-                    />
+                    <RadioButton
+                        android:id="@+id/rd_Today"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Today" />
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rd_Week"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Week" />
 
-        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/rd_Month"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Month" />
+
+                </RadioGroup>
+
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -149,17 +142,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:background="#76FF03"
+        android:text="save"
+        android:textAppearance="@style/h4"
+        android:textColor="@color/colorBackgroundMainActivity"
+        app:backgroundTint="@color/colorTabIndicator"
+        app:cornerRadius="2dp"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconTint="@color/colorBackgroundMainActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="save"
-        app:cornerRadius="2dp"
-        android:background="#76FF03"
         app:rippleColor="#76FF03"
-        app:strokeColor="#76FF03"
-        app:backgroundTint="@color/colorTabIndicator"
-        app:iconTint="@color/colorBackgroundMainActivity"
-        android:textColor="@color/colorBackgroundMainActivity"
-        android:textAppearance="@style/h4"
-        app:icon="@drawable/ic_baseline_add_24"/>
+        app:strokeColor="#76FF03" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

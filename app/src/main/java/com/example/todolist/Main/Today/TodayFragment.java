@@ -21,12 +21,13 @@ import com.example.todolist.Model.RemoteDataSource.RetrofitConfig.Api_ServicePro
 import com.example.todolist.Model.Repositories.GroupsRepository;
 import com.example.todolist.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TodayFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TodayFragment extends Fragment {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerFragment;
+
+
+public class TodayFragment extends DaggerFragment {
 
     private View rootView;
     private RecyclerView recyclerView;
@@ -58,7 +59,8 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_today, container, false);
         initialize();
-        showTodayGroups();
+     //   showTodayGroups();
+
         return rootView;
     }
 
@@ -67,26 +69,31 @@ public class TodayFragment extends Fragment {
         emptyStateToday = rootView.findViewById(R.id.emptyStateToday);
     }
 
-    private void showTodayGroups() {
-        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 1)).get(GroupsViewModel.class);
-        groupsViewModel.getGroupsToday().observe(getViewLifecycleOwner(), t -> {
-
-            if (t.size() < 1) {
-                emptyStateToday.setVisibility(View.VISIBLE);
-            } else {
-                Log.e("Day", "initialize: ");
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-                recyclerView.setLayoutManager(mLayoutManager);
-                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
-                todayGroupsAdapter = new TodayGroupsAdapter(t);
-                recyclerView.setAdapter(todayGroupsAdapter);
-            }
-
-        });
-
-        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
-            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
-        });
-    }
+//    @Inject
+//    public GroupsRepository groupsRepository;
+//
+//    private void showTodayGroups() {
+//
+//
+//        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 1)).get(GroupsViewModel.class);
+//        groupsViewModel.getGroupsToday().observe(getViewLifecycleOwner(), t -> {
+//
+//            if (t.size() < 1) {
+//                emptyStateToday.setVisibility(View.VISIBLE);
+//            } else {
+//                Log.e("Day", "initialize: ");
+//                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+//                recyclerView.setLayoutManager(mLayoutManager);
+//                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
+//                todayGroupsAdapter = new TodayGroupsAdapter(t);
+//                recyclerView.setAdapter(todayGroupsAdapter);
+//            }
+//
+//        });
+//
+//        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
+//            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
+//        });
+//    }
 
 }

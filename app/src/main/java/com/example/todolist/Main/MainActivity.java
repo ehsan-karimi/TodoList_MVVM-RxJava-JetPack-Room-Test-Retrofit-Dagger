@@ -1,5 +1,6 @@
 package com.example.todolist.Main;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -23,7 +24,14 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasFragmentInjector;
+
+public class MainActivity extends AppCompatActivity implements HasFragmentInjector {
 
     public static ViewPager2 viewPager;
     // The pager adapter, which provides the pages to the view pager widget.
@@ -35,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final Integer ADD_GROUP_REQUEST_ID = 1001;
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AndroidInjection.inject(this);
         initialize();
 
         int j = R.drawable.ic_home;
@@ -61,11 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-    }
+
+
 
 
     private void initialize() {
@@ -99,4 +109,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+    @Override
+    public AndroidInjector<Fragment> fragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
 }

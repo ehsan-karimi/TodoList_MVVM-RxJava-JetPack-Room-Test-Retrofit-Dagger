@@ -1,9 +1,12 @@
 package com.example.todolist.AddGroups;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -14,9 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.Main.GroupsViewModel;
-import com.example.todolist.Main.GroupsViewModelFactory;
-import com.example.todolist.Main.Today.TodayGroupsAdapter;
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.Entities.Icons;
 import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
@@ -27,15 +27,17 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.net.InetAddress;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.CompletableObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.disposables.DisposableContainer;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddTaskGroupActivity extends AppCompatActivity implements IconListAdapter.OnItemClicked {
@@ -49,19 +51,31 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
     private String category;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AddTaskGroupViewModel addTaskGroupViewModel;
+    private ProgressBar progress_circular;
+    private ImageButton ib_back;
+
+    private AddTaskGroupViewModelFactory viewModelFactory;
+
+    @Inject
+    public GroupsRepository groupsRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task_group);
+        AndroidInjection.inject(this);
         initialize();
         showList();
+
+
     }
 
     private void initialize() {
         recyclerView = findViewById(R.id.iconList);
         ed_label = findViewById(R.id.ed_label);
         extended_fab = findViewById(R.id.extended_fab);
+        progress_circular = findViewById(R.id.progress_circular);
+        ib_back = findViewById(R.id.ib_back);
 
         radioGroup = findViewById(R.id.radioGroup);
 
@@ -71,8 +85,13 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
                 }
         );
 
+        ib_back.setOnClickListener(v -> {
+            finish();
+        });
+
         extended_fab.setOnClickListener(v -> {
             if (icon != 0 && ed_label.getText().length() > 0 && category != null) {
+                progress_circular.setVisibility(View.VISIBLE);
                 saveGroup(category);
             } else {
                 Toast.makeText(getApplicationContext(), "Please enter the requested information", Toast.LENGTH_LONG).show();
@@ -95,12 +114,21 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
         iconListAdapter.setOnClick(this);
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+
+
     private void saveGroup(String cat) {
 
 
         Groups groups = new Groups(icon, ed_label.getText().toString(), cat);
 
-        addTaskGroupViewModel = new ViewModelProvider(this, new AddTaskGroupViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()))).get(AddTaskGroupViewModel.class);
+        viewModelFactory = new AddTaskGroupViewModelFactory(groupsRepository);
+        addTaskGroupViewModel = new ViewModelProvider(this, viewModelFactory).get(AddTaskGroupViewModel.class);
 
         addTaskGroupViewModel.saveGroup(groups)
                 .subscribeOn(Schedulers.io())
@@ -108,30 +136,34 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                      //  disposable = d;
+                        //  disposable = d;
                         compositeDisposable.add(d);
                     }
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(getApplicationContext(), "Insert Successfully", Toast.LENGTH_LONG).show();
-                     //   finish();
-                        getLastGroup();
+
+                        if (isNetworkConnected()) {
+                            getLastGroup();
+                        } else {
+                            progress_circular.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Insert Successfully, You Can Sync Later", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        progress_circular.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Insert Failed!!!", Toast.LENGTH_LONG).show();
                     }
                 });
 
 
-
-
-
     }
 
-    private void getLastGroup(){
+    private void getLastGroup() {
 
         addTaskGroupViewModel.getLastGroup()
                 .subscribeOn(Schedulers.io())
@@ -139,7 +171,7 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
                 .subscribe(new SingleObserver<Groups>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -149,14 +181,16 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
 
                     @Override
                     public void onError(Throwable e) {
-
+                        progress_circular.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Insert Successfully, You Can Sync Later", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 });
 
 
     }
 
-    private void syncGroup(Groups groups){
+    private void syncGroup(Groups groups) {
 
         addTaskGroupViewModel.syncGroup(groups)
                 .subscribeOn(Schedulers.io())
@@ -164,17 +198,21 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        compositeDisposable.add(d);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("SYNC", "onComplete: success" );
+                        progress_circular.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Insert Successfully, Sync Successfully", Toast.LENGTH_LONG).show();
+                        finish();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("SYNC", "onComplete: failed" );
+                        progress_circular.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Insert Successfully, You Can Sync Later", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 });
     }
@@ -184,16 +222,6 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
         icon = id;
     }
 
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            //You can replace it with your name
-            return !ipAddr.equals("TRUE");
-
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     @Override
     protected void onDestroy() {

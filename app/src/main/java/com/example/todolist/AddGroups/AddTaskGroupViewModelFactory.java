@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todolist.Model.Repositories.GroupsRepository;
 
+import javax.inject.Inject;
+
 public class AddTaskGroupViewModelFactory implements ViewModelProvider.Factory {
 
     private GroupsRepository groupsRepository;
 
+   // @Inject
     public AddTaskGroupViewModelFactory(GroupsRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
     }

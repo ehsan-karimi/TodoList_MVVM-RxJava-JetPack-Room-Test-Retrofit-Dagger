@@ -29,6 +29,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WeekFragment#newInstance} factory method to
@@ -67,7 +69,7 @@ public class WeekFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_week, container, false);
         initialize();
-        showWeekGroups();
+     //   showWeekGroups();
         return rootView;
     }
 
@@ -76,23 +78,24 @@ public class WeekFragment extends Fragment {
         emptyStateWeek = rootView.findViewById(R.id.emptyStateWeek);
     }
 
-    private void showWeekGroups(){
-        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 0)).get(GroupsViewModel.class);
-        groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t -> {
-            if (t.size() < 1) {
-                emptyStateWeek.setVisibility(View.VISIBLE);
-            } else {
-                Log.e("Week", "initialize: ");
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-                recyclerView.setLayoutManager(mLayoutManager);
-                weekGroupsAdapter = new WeekGroupsAdapter(t);
-                recyclerView.setAdapter(weekGroupsAdapter);
-            }
-        });
 
-        groupsViewModel.getError().observe(getViewLifecycleOwner(), e ->{
-            Toast.makeText(rootView.getContext(),"Failed Sync Your Groups!!!",Toast.LENGTH_LONG).show();
-        });
-    }
+//    private void showWeekGroups(){
+//        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(new GroupsRepository(PersonDatabase.getInstance(rootView.getContext().getApplicationContext()).groupsDao(), Api_ServiceProvider.getApi_interface()), 0)).get(GroupsViewModel.class);
+//        groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t -> {
+//            if (t.size() < 1) {
+//                emptyStateWeek.setVisibility(View.VISIBLE);
+//            } else {
+//                Log.e("Week", "initialize: ");
+//                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+//                recyclerView.setLayoutManager(mLayoutManager);
+//                weekGroupsAdapter = new WeekGroupsAdapter(t);
+//                recyclerView.setAdapter(weekGroupsAdapter);
+//            }
+//        });
+//
+//        groupsViewModel.getError().observe(getViewLifecycleOwner(), e ->{
+//            Toast.makeText(rootView.getContext(),"Failed Sync Your Groups!!!",Toast.LENGTH_LONG).show();
+//        });
+//    }
 
 }

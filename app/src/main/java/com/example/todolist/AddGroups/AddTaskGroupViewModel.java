@@ -12,6 +12,8 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Single;
@@ -21,8 +23,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddTaskGroupViewModel extends ViewModel {
 
+
     private GroupsRepository groupsRepository;
 
+    //@Inject
     public AddTaskGroupViewModel(GroupsRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
     }
