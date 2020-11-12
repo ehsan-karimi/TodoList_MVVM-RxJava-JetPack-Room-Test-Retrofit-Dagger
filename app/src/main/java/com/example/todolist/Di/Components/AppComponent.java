@@ -27,12 +27,12 @@ public interface AppComponent extends AndroidInjector<DiApplication> {
     GroupsRepository getGroupsRepository();
 
     @Component.Builder
-    interface builder{
+    interface builder {
 
-        public AppComponent build();
+        AppComponent build();
 
         @BindsInstance
-        public builder setContext(Context context);
+        builder setContext(Context context);
 
     }
 }
