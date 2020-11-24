@@ -9,6 +9,8 @@ import com.example.todolist.Model.Repositories.GroupsRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -19,6 +21,7 @@ public class GroupsViewModel extends ViewModel {
     private Disposable disposable;
     private GroupsRepository groupsRepository;
 
+ //   @Inject
     public GroupsViewModel(GroupsRepository groupsRepository, int firstRequest) {
         this.groupsRepository = groupsRepository;
         if (firstRequest == 1){

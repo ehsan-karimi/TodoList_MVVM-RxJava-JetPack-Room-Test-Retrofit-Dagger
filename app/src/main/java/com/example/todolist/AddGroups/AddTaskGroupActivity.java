@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.Di.ViewModelFactory;
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.Entities.Icons;
 import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
@@ -58,6 +59,9 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
 
     @Inject
     public GroupsRepository groupsRepository;
+
+    @Inject
+    public ViewModelFactory viewModelFactory_new;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,8 +131,8 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
 
         Groups groups = new Groups(icon, ed_label.getText().toString(), cat);
 
-        viewModelFactory = new AddTaskGroupViewModelFactory(groupsRepository);
-        addTaskGroupViewModel = new ViewModelProvider(this, viewModelFactory).get(AddTaskGroupViewModel.class);
+      //  viewModelFactory = new AddTaskGroupViewModelFactory(groupsRepository);
+        addTaskGroupViewModel = new ViewModelProvider(this, viewModelFactory_new).get(AddTaskGroupViewModel.class);
 
         addTaskGroupViewModel.saveGroup(groups)
                 .subscribeOn(Schedulers.io())

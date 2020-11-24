@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
@@ -21,12 +22,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class AddTaskGroupViewModel extends ViewModel {
 
+    @Inject
+    public GroupsRepository groupsRepository;
 
-    private GroupsRepository groupsRepository;
-
-    //@Inject
+    @Inject
     public AddTaskGroupViewModel(GroupsRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
     }

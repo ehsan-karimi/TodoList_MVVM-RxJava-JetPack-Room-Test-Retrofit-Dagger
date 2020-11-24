@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.todolist.Di.ViewModelFactory;
 import com.example.todolist.Main.GroupsViewModel;
 import com.example.todolist.Main.GroupsViewModelFactory;
 import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
@@ -36,6 +37,9 @@ public class TodayFragment extends Fragment {
     private LinearLayout emptyStateToday;
     @Inject
     public GroupsRepository groupsRepository;
+
+//    @Inject
+//    public ViewModelFactory viewModelFactory;
 
     public static TodayFragment newInstance(String text) {
         TodayFragment f = new TodayFragment();
@@ -77,6 +81,7 @@ public class TodayFragment extends Fragment {
     private void showTodayGroups() {
 
 
+//        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 1)).get(GroupsViewModel.class);
         GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 1)).get(GroupsViewModel.class);
         groupsViewModel.getGroupsToday().observe(getViewLifecycleOwner(), t -> {
 
