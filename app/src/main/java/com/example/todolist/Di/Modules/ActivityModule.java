@@ -7,6 +7,7 @@ import com.example.todolist.Di.Scopes.TestScope;
 import com.example.todolist.Main.MainActivity;
 import com.example.todolist.Main.Month.MonthFragment;
 import com.example.todolist.Main.Today.TodayFragment;
+import com.example.todolist.Main.Week.WeekFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -21,10 +22,15 @@ public abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract AddTaskGroupActivity addTaskGroupActivity();
 
-//    @ContributesAndroidInjector
+    //    @ContributesAndroidInjector
 //    abstract MonthFragment monthFragment();
 //
 
+    @ContributesAndroidInjector
+    abstract WeekFragment weekFragment();
+
+    @ContributesAndroidInjector
+    abstract MonthFragment monthFragment();
 
     @ContributesAndroidInjector
     abstract TodayFragment todayFragment();

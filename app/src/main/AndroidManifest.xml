@@ -28,6 +28,8 @@
 
         <activity android:name=".AddGroups.AddTaskGroupActivity"/>
 
+        <activity android:name=".AddTasks.AddTaskActivity"/>
+
     </application>
 
 </manifest>

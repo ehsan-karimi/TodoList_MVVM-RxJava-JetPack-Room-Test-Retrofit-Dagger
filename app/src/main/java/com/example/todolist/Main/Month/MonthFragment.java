@@ -27,6 +27,7 @@ import com.example.todolist.R;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +40,8 @@ public class MonthFragment extends Fragment {
     private RecyclerView recyclerView;
     private MonthGroupsAdapter monthGroupsAdapter;
     private LinearLayout emptyStateMonth;
+    @Inject
+    public GroupsRepository groupsRepository;
 
     public static MonthFragment newInstance(String text) {
         MonthFragment f = new MonthFragment();
@@ -64,8 +67,9 @@ public class MonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_month, container, false);
+        AndroidSupportInjection.inject(this);
         initialize();
-   //     showMonthGroups();
+        showMonthGroups();
         return rootView;
     }
 
@@ -78,29 +82,27 @@ public class MonthFragment extends Fragment {
 
     }
 
-//    @Inject
-//    public GroupsRepository groupsRepository;
-//
-//    private void showMonthGroups() {
-//        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 0)).get(GroupsViewModel.class);
-//        groupsViewModel.getGroupsMonth().observe(getViewLifecycleOwner(), t -> {
-//
-//            if (t.size() < 1) {
-//                emptyStateMonth.setVisibility(View.VISIBLE);
-//            } else {
-//                Log.e("Month", "initialize: ");
-//                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-//                recyclerView.setLayoutManager(mLayoutManager);
-//                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
-//                monthGroupsAdapter = new MonthGroupsAdapter(t);
-//                recyclerView.setAdapter(monthGroupsAdapter);
-//            }
-//
-//        });
-//
-//        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
-//            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
-//        });
-//    }
+
+    private void showMonthGroups() {
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 0)).get(GroupsViewModel.class);
+        groupsViewModel.getGroupsMonth().observe(getViewLifecycleOwner(), t -> {
+
+            if (t.size() < 1) {
+                emptyStateMonth.setVisibility(View.VISIBLE);
+            } else {
+                Log.e("Month", "initialize: ");
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
+                monthGroupsAdapter = new MonthGroupsAdapter(t);
+                recyclerView.setAdapter(monthGroupsAdapter);
+            }
+
+        });
+
+        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
+            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
+        });
+    }
 
 }

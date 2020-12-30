@@ -70,8 +70,6 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
         AndroidInjection.inject(this);
         initialize();
         showList();
-
-
     }
 
     private void initialize() {
@@ -125,13 +123,12 @@ public class AddTaskGroupActivity extends AppCompatActivity implements IconListA
     }
 
 
-
     private void saveGroup(String cat) {
 
 
         Groups groups = new Groups(icon, ed_label.getText().toString(), cat);
 
-      //  viewModelFactory = new AddTaskGroupViewModelFactory(groupsRepository);
+        //  viewModelFactory = new AddTaskGroupViewModelFactory(groupsRepository);
         addTaskGroupViewModel = new ViewModelProvider(this, viewModelFactory_new).get(AddTaskGroupViewModel.class);
 
         addTaskGroupViewModel.saveGroup(groups)

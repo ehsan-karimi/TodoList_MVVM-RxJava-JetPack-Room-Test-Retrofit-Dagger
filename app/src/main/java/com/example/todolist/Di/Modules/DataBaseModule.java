@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.example.todolist.Model.LocalDataSource.GroupsDao;
 import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
+import com.example.todolist.Model.LocalDataSource.TasksDao;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,5 +29,10 @@ public class DataBaseModule {
 
     @Singleton
     @Provides
-    GroupsDao providePersonDao(PersonDatabase db) { return db.groupsDao(); }
+    GroupsDao provideGroupsDao(PersonDatabase db) { return db.groupsDao(); }
+
+    @Singleton
+    @Provides
+    TasksDao provideTasksDao(PersonDatabase db) { return db.tasksDao(); }
+
 }
