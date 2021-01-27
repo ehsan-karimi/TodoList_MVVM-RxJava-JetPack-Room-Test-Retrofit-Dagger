@@ -68,16 +68,12 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
             progressBar = itemView.findViewById(R.id.progress_Groups);
             icon = itemView.findViewById(R.id.iv_TodayGroups);
             label = itemView.findViewById(R.id.tv_LabelTodayGroups);
+            cardView = itemView.findViewById(R.id.card);
             // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
             //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
 
 
-            cardView = itemView.findViewById(R.id.card);
 
-            cardView.setOnClickListener(v->{
-                Intent intent = new Intent(itemView.getContext(), InsideTodayActivity.class);
-                itemView.getContext().startActivity(intent);
-            });
 
         }
 
@@ -89,6 +85,13 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
 //            firstCharacterTv.setText(groupsList.getId());
             icon.setImageResource(groupsList.getIcon());
             label.setText(groupsList.getLabel());
+
+
+            cardView.setOnClickListener(v->{
+                Intent intent = new Intent(itemView.getContext(), InsideTodayActivity.class);
+                intent.putExtra("groupId",groupsList.getId());
+                itemView.getContext().startActivity(intent);
+            });
 
             switch (groupsList.getIcon()){
                 case 2131165301:

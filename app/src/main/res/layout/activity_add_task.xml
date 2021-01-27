@@ -71,7 +71,7 @@
                     android:hint="task">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ed_label"
+                        android:id="@+id/ed_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLength="50" />

@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".Di.DiApplication"
         android:usesCleartextTraffic="true"
@@ -29,6 +31,23 @@
         <activity android:name=".AddGroups.AddTaskGroupActivity"/>
 
         <activity android:name=".AddTasks.AddTaskActivity"/>
+
+        <receiver android:name=".Utils.NotificationPublisher">
+        </receiver>
+
+        <receiver android:name=".Utils.ScheduleAfterReboot" android:enabled="true" android:exported="false" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+
+        </receiver>
+
+
 
     </application>
 

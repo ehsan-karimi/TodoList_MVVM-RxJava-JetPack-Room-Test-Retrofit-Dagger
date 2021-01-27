@@ -42,7 +42,10 @@ public class InsideTodayActivity extends AppCompatActivity {
 
     private void setOnClick(){
         extended_fab_add_task.setOnClickListener(v->{
-            Intent intent = new Intent(this , AddTaskActivity.class);
+            Intent intent = getIntent();
+            long groupId = intent.getLongExtra("groupId",0);
+            intent = new Intent(this , AddTaskActivity.class);
+            intent.putExtra("groupId",groupId);
             startActivity(intent);
         });
     }

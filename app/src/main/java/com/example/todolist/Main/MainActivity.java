@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.todolist.AddGroups.AddTaskGroupActivity;
 import com.example.todolist.R;
 import com.example.todolist.Utils.AppExecutors;
+import com.example.todolist.Utils.ScheduleNotification;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements HasFragmentInject
     private static final Integer ADD_GROUP_REQUEST_ID = 1001;
 
     @Inject
+    public ScheduleNotification scheduleNotification;
+
+    @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
 
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements HasFragmentInject
         setContentView(R.layout.activity_main);
         AndroidInjection.inject(this);
         initialize();
+
+//        scheduleNotification.createNotificationChannel();
+//        scheduleNotification.scheduleNotification(scheduleNotification.getNotification(R.drawable.ic_calendar, "test title", "test content"), 5000);
 
 //        int j = R.drawable.ic_home;
 //        Log.e("For Me:", "onCreate: " + String.valueOf(j));

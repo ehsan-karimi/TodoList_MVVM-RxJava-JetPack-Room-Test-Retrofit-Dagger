@@ -1,6 +1,7 @@
 package com.example.todolist.Model.Entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tbl_tasks")
@@ -11,6 +12,17 @@ public class Tasks {
     private String title;
     private String date;
     private boolean done;
+
+    public Tasks() {
+    }
+
+    @Ignore
+    public Tasks(long groupId, String title, String date, boolean done) {
+        this.groupId = groupId;
+        this.title = title;
+        this.date = date;
+        this.done = done;
+    }
 
     public int getId() {
         return id;
