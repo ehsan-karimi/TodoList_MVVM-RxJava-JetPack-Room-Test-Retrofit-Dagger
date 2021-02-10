@@ -1,12 +1,12 @@
 package com.example.todolist.Model.RemoteDataSource;
 
+import com.example.todolist.Model.Entities.EntryResponse;
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.Entities.Tasks;
 import com.google.gson.JsonObject;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -24,4 +24,7 @@ public interface Api_Interface {
 
     @POST("add_task.php")
     Single<String> add_Task(@Body JsonObject body);
+
+    @POST("entry.php")
+    Single<EntryResponse> entry(@Body JsonObject body);
 }

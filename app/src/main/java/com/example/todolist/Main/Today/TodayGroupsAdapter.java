@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.InsideGroupToday.InsideTodayActivity;
+import com.example.todolist.tasks.TasksActivity;
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.R;
 import com.google.android.material.card.MaterialCardView;
@@ -58,6 +58,7 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
         private MaterialCardView cardView;
         private ImageView icon;
         private TextView label;
+        private TextView taskCount;
 
         public todayGroupsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +70,7 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
             icon = itemView.findViewById(R.id.iv_TodayGroups);
             label = itemView.findViewById(R.id.tv_LabelTodayGroups);
             cardView = itemView.findViewById(R.id.card);
+            taskCount = itemView.findViewById(R.id.taskCount);
             // progressBar = new ProgressBar(itemView.getContext(),null, android.R.attr.);
             //     progressBar.setBackgroundColor(itemView.getResources().getColor(R.color.colorBackgroundMainActivity));
 
@@ -85,14 +87,19 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
 //            firstCharacterTv.setText(groupsList.getId());
             icon.setImageResource(groupsList.getIcon());
             label.setText(groupsList.getLabel());
+            taskCount.setText(String.valueOf(groupsList.getTasksCount()) + " task");
 
 
             cardView.setOnClickListener(v->{
-                Intent intent = new Intent(itemView.getContext(), InsideTodayActivity.class);
+                Intent intent = new Intent(itemView.getContext(), TasksActivity.class);
                 intent.putExtra("groupId",groupsList.getId());
+                intent.putExtra("groupLabel",groupsList.getLabel());
+                intent.putExtra("groupCategory","Day");
                 itemView.getContext().startActivity(intent);
             });
 
+            progressBar.setMax(100);
+            progressBar.setProgress(groupsList.getDonePercent());
             switch (groupsList.getIcon()){
                 case 2131165301:
                     progressBar.getProgressDrawable().setColorFilter(itemView.getResources().getColor(R.color.purple), PorterDuff.Mode.SRC_IN);

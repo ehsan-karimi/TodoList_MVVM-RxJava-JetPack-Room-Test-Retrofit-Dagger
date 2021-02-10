@@ -10,17 +10,15 @@ import com.example.todolist.Model.Repositories.GroupsRepository;
 public class GroupsViewModelFactory implements ViewModelProvider.Factory {
 
     private GroupsRepository groupsRepository;
-    private int firstRequest;
 
-    public GroupsViewModelFactory(GroupsRepository groupsRepository, int firstRequest) {
+    public GroupsViewModelFactory(GroupsRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
-        this.firstRequest = firstRequest;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new GroupsViewModel(groupsRepository,firstRequest);
+        return (T) new GroupsViewModel(groupsRepository);
     }
 }
 

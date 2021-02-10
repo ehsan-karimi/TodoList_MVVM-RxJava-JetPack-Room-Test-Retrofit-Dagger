@@ -2,6 +2,7 @@ package com.example.todolist.Model.Repositories;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.Model.LocalDataSource.TasksDao;
 import com.example.todolist.Model.RemoteDataSource.Api_Interface;
@@ -10,6 +11,8 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 
 public class TasksRepository {
@@ -31,11 +34,15 @@ public class TasksRepository {
         return tasksDao.getAllTasks();
     }
 
-    public LiveData<List<Tasks>> getTasks(long groupId) {
+    public Observable<List<Tasks>> getAllTasksRx() {
+        return tasksDao.getAllTasksRx();
+    }
+
+    public LiveData<List<Tasks>> getTasks(int groupId) {
         return tasksDao.getTasks(groupId);
     }
 
-    public Completable saveTask(Tasks tasks) {
+    public Single<Long> saveTask(Tasks tasks) {
         return tasksDao.insertTasks(tasks);
     }
 
@@ -43,4 +50,15 @@ public class TasksRepository {
         return api_interface.add_Task(tasks).ignoreElement();
     }
 
+    public Completable updateTask(Tasks tasks){
+        return tasksDao.updateTasks(tasks);
+    }
+
+    public Completable updateGroups(Groups groups){
+        return tasksDao.updateGroups(groups);
+    }
+
+    public Single<Groups> getGroup(int gpId){
+        return tasksDao.getGroup(gpId);
+    }
 }

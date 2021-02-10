@@ -7,26 +7,42 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.view.View;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
+import androidx.lifecycle.LifecycleObserver;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.todolist.Main.MainActivity;
+import com.example.todolist.Main.Today.TodayGroupsAdapter;
+import com.example.todolist.Model.Entities.Tasks;
+import com.example.todolist.Model.Repositories.TasksRepository;
 import com.example.todolist.R;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import dagger.android.DaggerBroadcastReceiver;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
-public class ScheduleAfterReboot extends DaggerBroadcastReceiver {
+public class ScheduleAfterReboot extends DaggerBroadcastReceiver implements LifecycleObserver {
     @Inject
     public ScheduleNotification scheduleNotification;
+
+    @Inject
+    public TasksRepository tasksRepository;
+
 
 //    @Override
 //    public void onReceive(Context context, Intent intent) {
@@ -89,7 +105,37 @@ public class ScheduleAfterReboot extends DaggerBroadcastReceiver {
         AndroidInjection.inject(this, context);
         super.onReceive(context, intent);
         scheduleNotification.createNotificationChannel();
-        scheduleNotification.scheduleNotification(scheduleNotification.getNotification(R.drawable.ic_calendar, "test title", "test content"), 5000);
+
+
+        tasksRepository.getAllTasksRx().subscribeOn(Schedulers.io()).subscribe(new Observer<List<Tasks>>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull List<Tasks> tasks) {
+                int counter = 0;
+                while (counter < tasks.size()) {
+                    if (!tasks.get(counter).isDeleted() && !tasks.get(counter).isDone()) {
+                        scheduleNotification.scheduleNotification(scheduleNotification.getNotification(R.drawable.ic_github, "ToDo", tasks.get(counter).getContent()), tasks.get(counter).getDate(), tasks.get(counter).isRepeatTask(), tasks.get(counter).getId(), false);
+                    }
+                    counter++;
+                }
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
 
     }
 }

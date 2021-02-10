@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.todolist.Model.Entities.Groups;
+import com.example.todolist.Model.Entities.Tasks;
 
 import java.util.List;
 
@@ -39,8 +40,12 @@ public interface GroupsDao {
     Completable insertGroups(Groups groups);
 
     @Update
-    int updateGroups(Groups groups);
+    Completable updateGroup(Groups groups);
+
+    @Query("SELECT * FROM tbl_tasks")
+    LiveData<List<Tasks>> getTasksTest();
 
     @Delete
     int deleteGroups(Groups groups);
+
 }

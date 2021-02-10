@@ -1,25 +1,36 @@
-package com.example.todolist.InsideGroupToday;
+package com.example.todolist.tasks;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.AddGroups.IconListAdapter;
 import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.R;
 
 import java.util.List;
 
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.EmployeeViewHolder> {
-    private List<Tasks> employeeModel;
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.EmployeeViewHolder> {
+    private List<Tasks> tasks;
+    private int done_Tasks = 0;
 
-    public TaskListAdapter(List<Tasks> employeeModel) {
-        this.employeeModel = employeeModel;
+    public TasksAdapter(List<Tasks> tasks) {
+        this.tasks = tasks;
+    }
+
+    //declare interface
+    private TasksAdapter.OnItemClicked onClick;
+
+    //make interface like this
+    public interface OnItemClicked {
+        void onItemClick(Tasks tasks);
     }
 
     @NonNull
@@ -28,19 +39,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
         return new EmployeeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_task, parent, false));
     }
 
-    public void addEmployee(Tasks employeeModel) {
-        this.employeeModel.add(0, employeeModel);
+    public void addEmployee(Tasks tasks) {
+        this.tasks.add(0, tasks);
         notifyItemInserted(0);
+    }
+
+    public int doneTasks(){
+        return done_Tasks;
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeViewHolder holder, int position) {
-        holder.bind(employeeModel.get(position));
+        holder.bind(tasks.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return employeeModel.size();
+        return tasks.size();
     }
 
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
@@ -49,9 +64,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
 //        private TextView scoreTv;
 //        private TextView firstCharacterTv;
         private ProgressBar progressBar;
+        private CheckBox test;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
+            test = itemView.findViewById(R.id.test);
 //            fullNameTv = itemView.findViewById(R.id.tv_student_fullName);
 //            courseTitleTv = itemView.findViewById(R.id.tv_student_course);
 //            scoreTv = itemView.findViewById(R.id.tv_student_score);
@@ -64,13 +81,28 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.Employ
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(Tasks employeeModel) {
-//            fullNameTv.setText(employeeModel.getFirstname() + " " + employeeModel.getLastname());
-//            courseTitleTv.setText(employeeModel.getLastname());
-//            scoreTv.setText(String.valueOf(employeeModel.getPhonenumber()));
-//            firstCharacterTv.setText(employeeModel.getId());
+        public void bind(Tasks tasks) {
+//            fullNameTv.setText(tasks.getFirstname() + " " + tasks.getLastname());
+//            courseTitleTv.setText(tasks.getLastname());
+//            scoreTv.setText(String.valueOf(tasks.getPhonenumber()));
+//            firstCharacterTv.setText(tasks.getId());
+            test.setText(tasks.getContent());
+            test.setOnClickListener(v->onClick.onItemClick(tasks));
+
+            if (tasks.isDone()){
+                test.setChecked(true);
+                done_Tasks++;
+            }
+
         }
     }
+
+    public void setOnClick(TasksAdapter.OnItemClicked onClick) {
+        this.onClick = onClick;
+    }
+
+
+
 }
 
 

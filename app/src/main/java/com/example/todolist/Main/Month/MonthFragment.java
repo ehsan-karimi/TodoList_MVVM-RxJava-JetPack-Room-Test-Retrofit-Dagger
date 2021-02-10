@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.todolist.Di.ViewModelFactory;
 import com.example.todolist.Main.GroupsViewModel;
 import com.example.todolist.Main.GroupsViewModelFactory;
 import com.example.todolist.Main.Today.TodayGroupsAdapter;
@@ -42,6 +43,9 @@ public class MonthFragment extends Fragment {
     private LinearLayout emptyStateMonth;
     @Inject
     public GroupsRepository groupsRepository;
+
+    @Inject
+    public ViewModelFactory viewModelFactory_new;
 
     public static MonthFragment newInstance(String text) {
         MonthFragment f = new MonthFragment();
@@ -84,13 +88,13 @@ public class MonthFragment extends Fragment {
 
 
     private void showMonthGroups() {
-        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 0)).get(GroupsViewModel.class);
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, viewModelFactory_new).get(GroupsViewModel.class);
         groupsViewModel.getGroupsMonth().observe(getViewLifecycleOwner(), t -> {
 
-            if (t.size() < 1) {
+            if (t.size() == 0) {
                 emptyStateMonth.setVisibility(View.VISIBLE);
             } else {
-                Log.e("Month", "initialize: ");
+                emptyStateMonth.setVisibility(View.GONE);
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //    recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
@@ -100,9 +104,6 @@ public class MonthFragment extends Fragment {
 
         });
 
-        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
-            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
-        });
     }
 
 }

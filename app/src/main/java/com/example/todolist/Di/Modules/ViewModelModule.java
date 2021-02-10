@@ -2,32 +2,43 @@ package com.example.todolist.Di.Modules;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.todolist.AddGroups.AddTaskGroupViewModel;
+import com.example.todolist.AddGroups.AddGroupViewModel;
 import com.example.todolist.AddTasks.AddTaskViewModel;
 import com.example.todolist.Di.Keys.ViewModelKey;
 import com.example.todolist.Main.GroupsViewModel;
+import com.example.todolist.entry.EntryViewModel;
+import com.example.todolist.tasks.TasksViewModel;
 
 import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 import dagger.multibindings.IntoMap;
 
 @Module
 public abstract class ViewModelModule {
 
     @Binds
-    @ViewModelKey(AddTaskGroupViewModel.class)
+    @ViewModelKey(AddGroupViewModel.class)
     @IntoMap
-    abstract ViewModel provideAddTaskGroupViewModel(AddTaskGroupViewModel addTaskGroupViewModel);
+    abstract ViewModel provideAddTaskGroupViewModel(AddGroupViewModel addGroupViewModel);
 
     @Binds
     @ViewModelKey(AddTaskViewModel.class)
     @IntoMap
     abstract ViewModel provideAddTaskViewModel(AddTaskViewModel addTaskViewModel);
 
-//    @Binds
-//    @ViewModelKey(GroupsViewModel.class)
-//    @IntoMap
-//    abstract ViewModel provideGroupsViewModel(GroupsViewModel groupsViewModel,int s);
+    @Binds
+    @ViewModelKey(GroupsViewModel.class)
+    @IntoMap
+    abstract ViewModel provideGroupsViewModel(GroupsViewModel groupsViewModel);
+
+    @Binds
+    @ViewModelKey(EntryViewModel.class)
+    @IntoMap
+    abstract ViewModel provideEntryViewModel(EntryViewModel entryViewModel);
+
+    @Binds
+    @ViewModelKey(TasksViewModel.class)
+    @IntoMap
+    abstract ViewModel provideTasksViewModel(TasksViewModel tasksViewModel);
 
 }

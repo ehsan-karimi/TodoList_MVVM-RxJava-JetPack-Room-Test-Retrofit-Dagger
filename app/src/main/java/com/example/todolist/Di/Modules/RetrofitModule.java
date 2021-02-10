@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitModule {
 
     private Api_Interface api_interface;
-    private static final String BASE_URL = "http://192.168.1.100/PersonToDo/";
+    private static final String BASE_URL = "http://192.168.1.103/ToDo/api/";
 
     @Singleton
     @Provides

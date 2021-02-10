@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -27,8 +28,8 @@ public class ScheduleNotification {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "ghjgh";
-            String description = "hjukj";
+            CharSequence name = "ToDo";
+            String description = "Notification";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
             channel.setDescription(description);
@@ -38,17 +39,32 @@ public class ScheduleNotification {
         }
     }
 
-    public void scheduleNotification(Notification notification, long delay) {
+    public void scheduleNotification(Notification notification, long date, boolean repeat, int taskId, boolean cancelAlarm) {
 
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, taskId);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, taskId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-      //  long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, delay, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (cancelAlarm) {
+            alarmManager.cancel(pendingIntent);
+        } else {
+            if (repeat) {
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, date,
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+            } else {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, date, pendingIntent);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, date, pendingIntent);
+                }
+            }
+        }
+
+
     }
 
     public Notification getNotification(int iconId, String title, String content) {

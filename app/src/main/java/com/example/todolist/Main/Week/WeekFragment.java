@@ -1,12 +1,6 @@
 package com.example.todolist.Main.Week;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +8,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.todolist.AddGroups.AddTaskGroupViewModel;
-import com.example.todolist.AddGroups.AddTaskGroupViewModelFactory;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.todolist.Di.ViewModelFactory;
 import com.example.todolist.Main.GroupsViewModel;
 import com.example.todolist.Main.GroupsViewModelFactory;
-import com.example.todolist.Main.TaskGroupAdapter;
 import com.example.todolist.Model.Repositories.GroupsRepository;
-import com.example.todolist.Model.LocalDataSource.RoomConfig.PersonDatabase;
-import com.example.todolist.Model.RemoteDataSource.RetrofitConfig.Api_ServiceProvider;
 import com.example.todolist.R;
-import com.example.todolist.Model.Entities.Tasks;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
@@ -41,6 +30,8 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class WeekFragment extends Fragment {
 
+    @Inject
+    public ViewModelFactory viewModelFactory_new;
 
     public static WeekFragment newInstance(String text) {
         WeekFragment f = new WeekFragment();
@@ -86,12 +77,12 @@ public class WeekFragment extends Fragment {
 
 
     private void showWeekGroups() {
-        GroupsViewModel groupsViewModel = new ViewModelProvider(this, new GroupsViewModelFactory(groupsRepository, 0)).get(GroupsViewModel.class);
+        GroupsViewModel groupsViewModel = new ViewModelProvider(this, viewModelFactory_new).get(GroupsViewModel.class);
         groupsViewModel.getGroupsWeek().observe(getViewLifecycleOwner(), t -> {
             if (t.size() < 1) {
                 emptyStateWeek.setVisibility(View.VISIBLE);
             } else {
-                Log.e("Week", "initialize: ");
+                emptyStateWeek.setVisibility(View.GONE);
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
                 recyclerView.setLayoutManager(mLayoutManager);
                 weekGroupsAdapter = new WeekGroupsAdapter(t);
@@ -99,9 +90,7 @@ public class WeekFragment extends Fragment {
             }
         });
 
-        groupsViewModel.getError().observe(getViewLifecycleOwner(), e -> {
-            Toast.makeText(rootView.getContext(), "Failed Sync Your Groups!!!", Toast.LENGTH_LONG).show();
-        });
+
     }
 
 }

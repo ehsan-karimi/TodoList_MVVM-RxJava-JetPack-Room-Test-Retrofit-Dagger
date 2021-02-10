@@ -8,11 +8,14 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.Model.Entities.Tasks;
 
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface TasksDao {
@@ -20,8 +23,11 @@ public interface TasksDao {
     @Query("SELECT * FROM tbl_tasks")
     LiveData<List<Tasks>> getAllTasks();
 
+    @Query("SELECT * FROM tbl_tasks")
+    Observable<List<Tasks>> getAllTasksRx();
+
     @Query("SELECT * FROM tbl_tasks WHERE groupId = :gpId ORDER BY id DESC")
-    LiveData<List<Tasks>> getTasks(long gpId);
+    LiveData<List<Tasks>> getTasks(int gpId);
 
 //    @Query("SELECT * FROM tbl_groups ORDER BY id DESC LIMIT 1")
 //    Single<Groups> getLastGroup();
@@ -30,11 +36,17 @@ public interface TasksDao {
     void insertTasksList(List<Tasks> tasks);
 
     @Insert()
-    Completable insertTasks(Tasks tasks);
+    Single<Long> insertTasks(Tasks tasks);
 
     @Update
-    int updateTasks(Tasks tasks);
+    Completable updateTasks(Tasks tasks);
+
+    @Update
+    Completable updateGroups(Groups groups);
 
     @Delete
     int deleteTasks(Tasks tasks);
+
+    @Query("SELECT * FROM tbl_groups WHERE id = :gpId")
+    Single<Groups> getGroup(int gpId);
 }

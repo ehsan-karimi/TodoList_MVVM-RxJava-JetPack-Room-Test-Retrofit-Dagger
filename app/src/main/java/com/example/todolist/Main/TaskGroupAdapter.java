@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.InsideGroupToday.InsideTodayActivity;
+import com.example.todolist.tasks.TasksActivity;
 import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.R;
 import com.google.android.material.card.MaterialCardView;
@@ -69,7 +69,7 @@ public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.Empl
             cardView = itemView.findViewById(R.id.card);
 
             cardView.setOnClickListener(v->{
-                Intent intent = new Intent(itemView.getContext(), InsideTodayActivity.class);
+                Intent intent = new Intent(itemView.getContext(), TasksActivity.class);
                 itemView.getContext().startActivity(intent);
             });
 

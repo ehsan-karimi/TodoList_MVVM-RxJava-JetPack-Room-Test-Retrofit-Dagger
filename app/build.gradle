@@ -70,4 +70,8 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.23.2'
 
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    implementation 'com.github.jumadeveloper:networkmanager:0.0.2'
+
+    implementation "com.arthurivanets.bottomsheet:bottomsheets-core:1.2.0"
 }

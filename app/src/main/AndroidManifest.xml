@@ -2,12 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.todolist">
 
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".Di.DiApplication"
@@ -26,11 +32,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InsideGroupToday.InsideTodayActivity"/>
+        <activity android:name=".tasks.TasksActivity"/>
 
-        <activity android:name=".AddGroups.AddTaskGroupActivity"/>
+        <activity android:name=".AddGroups.AddGroupActivity"/>
 
         <activity android:name=".AddTasks.AddTaskActivity"/>
+
+        <activity android:name=".entry.EntryActivity"/>
 
         <receiver android:name=".Utils.NotificationPublisher">
         </receiver>
