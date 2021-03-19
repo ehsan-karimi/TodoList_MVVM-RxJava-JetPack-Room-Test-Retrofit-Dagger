@@ -1,10 +1,14 @@
 package com.example.todolist.tasks;
 
+import androidx.appcompat.app.AlertDialog;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -179,9 +183,64 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnI
         });
     }
 
+    private void deleteTask(Tasks tasks) {
+        Tasks tasks1 = new Tasks(tasks.getId(), tasks.getGroupId(), tasks.getContent(), tasks.getDate(), tasks.isRepeatTask(), tasks.isDone(), tasks.isSynced(), true, tasks.isUpdated());
+        tasksViewModel.updateTask(tasks1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+//                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onComplete() {
+                Toast.makeText(TasksActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                tasksViewModel.setScheduleNotification(groupLabel, tasks1.getContent(), R.drawable.ic_github, tasks1.getDate(), tasks1.isRepeatTask(), tasks1.getId(), true);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Toast.makeText(TasksActivity.this, "Deleted unsuccessfully!!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onError: ", e);
+            }
+        });
+    }
+
+    private void dialog(Tasks tasks) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete task")
+                .setMessage("Are you sure you want to delete this task?")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        deleteTask(tasks);
+                    }
+                })
+
+//                .setNeutralButton("Edit task", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Intent intent = new Intent(this, AddTaskActivity)
+//                    }
+//                })
+
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                //  .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     @Override
     public void onItemClick(Tasks tasks) {
         Log.e(TAG, "onItemClick: " + tasks.getId());
         updateTask(tasks);
+    }
+
+    @Override
+    public void onItemLongClick(Tasks tasks) {
+        dialog(tasks);
     }
 }

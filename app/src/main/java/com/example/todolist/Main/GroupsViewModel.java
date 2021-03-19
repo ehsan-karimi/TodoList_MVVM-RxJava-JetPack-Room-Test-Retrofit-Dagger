@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.Model.Entities.Groups;
+import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.Model.Repositories.GroupsRepository;
 import com.example.todolist.R;
+import com.example.todolist.Utils.ScheduleNotification;
 import com.example.todolist.Utils.SharedPreference;
 
 import java.io.IOException;
@@ -31,6 +33,9 @@ public class GroupsViewModel extends ViewModel {
 //    private Disposable disposable;
     @Inject
     public GroupsRepository groupsRepository;
+
+    @Inject
+    public ScheduleNotification scheduleNotification;
 
     @Inject
     public SharedPreference sharedPreference;
@@ -63,8 +68,25 @@ public class GroupsViewModel extends ViewModel {
         });
     }
 
+    public void setScheduleNotification(String title, String content, int iconId, long delay, boolean repeat, int taskId, boolean cancelAlarm){
+        scheduleNotification.createNotificationChannel();
+        scheduleNotification.scheduleNotification(scheduleNotification.getNotification(iconId, title, content), delay, repeat, taskId, cancelAlarm);
+    }
+
     public LiveData<List<Groups>> getGroupsToday() {
         return groupsRepository.getGroupsToday();
+    }
+
+    public Completable updateTask(Tasks tasks){
+        return groupsRepository.updateTask(tasks);
+    }
+
+    public Completable updateTask2(List<Tasks> tasks){
+        return groupsRepository.updateTask2(tasks);
+    }
+
+    public LiveData<List<Tasks>> getTasks(int gpId){
+        return groupsRepository.getTasks(gpId);
     }
 
     public LiveData<List<Groups>> getGroupsWeek() {
@@ -85,6 +107,10 @@ public class GroupsViewModel extends ViewModel {
 
     public String getDataSharedPreferences(String key) {
         return sharedPreference.get(key);
+    }
+
+    public Completable updateGroup(Groups groups){
+        return groupsRepository.updateGroup(groups);
     }
 
     @Override

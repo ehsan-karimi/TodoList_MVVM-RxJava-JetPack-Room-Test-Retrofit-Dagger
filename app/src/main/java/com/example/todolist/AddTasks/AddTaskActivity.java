@@ -62,6 +62,8 @@ public class AddTaskActivity extends AppCompatActivity implements TimePickerDial
         AndroidInjection.inject(this);
         initialize();
         setOnClick();
+
+
     }
 
     private void initialize() {

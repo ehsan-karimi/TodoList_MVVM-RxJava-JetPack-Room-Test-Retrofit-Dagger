@@ -26,7 +26,7 @@ public interface TasksDao {
     @Query("SELECT * FROM tbl_tasks")
     Observable<List<Tasks>> getAllTasksRx();
 
-    @Query("SELECT * FROM tbl_tasks WHERE groupId = :gpId ORDER BY id DESC")
+    @Query("SELECT * FROM tbl_tasks WHERE groupId = :gpId AND deleted = 0 ORDER BY id DESC")
     LiveData<List<Tasks>> getTasks(int gpId);
 
 //    @Query("SELECT * FROM tbl_groups ORDER BY id DESC LIMIT 1")
@@ -40,6 +40,9 @@ public interface TasksDao {
 
     @Update
     Completable updateTasks(Tasks tasks);
+
+    @Update
+    Completable updateTasks2(List<Tasks> tasks);
 
     @Update
     Completable updateGroups(Groups groups);

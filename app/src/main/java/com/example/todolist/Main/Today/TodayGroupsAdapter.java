@@ -13,9 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist.Model.Entities.Tasks;
 import com.example.todolist.tasks.TasksActivity;
 import com.example.todolist.Model.Entities.Groups;
 import com.example.todolist.R;
+import com.example.todolist.tasks.TasksAdapter;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -26,6 +28,15 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
 
     public TodayGroupsAdapter(List<Groups> groupsList) {
         this.groupsList = groupsList;
+    }
+
+    //declare interface
+    private TodayGroupsAdapter.OnItemClicked onClick;
+
+    //make interface like this
+    public interface OnItemClicked {
+        void onItemClick(Groups groups);
+        void onItemLongClick(Groups groups);
     }
 
     @NonNull
@@ -91,11 +102,15 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
 
 
             cardView.setOnClickListener(v->{
-                Intent intent = new Intent(itemView.getContext(), TasksActivity.class);
-                intent.putExtra("groupId",groupsList.getId());
-                intent.putExtra("groupLabel",groupsList.getLabel());
-                intent.putExtra("groupCategory","Day");
-                itemView.getContext().startActivity(intent);
+                onClick.onItemClick(groupsList);
+            });
+
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    onClick.onItemLongClick(groupsList);
+                    return false;
+                }
             });
 
             progressBar.setMax(100);
@@ -119,6 +134,9 @@ public class TodayGroupsAdapter extends RecyclerView.Adapter<TodayGroupsAdapter.
             }
 
         }
+    }
+    public void setOnClick(TodayGroupsAdapter.OnItemClicked onClick) {
+        this.onClick = onClick;
     }
 }
 

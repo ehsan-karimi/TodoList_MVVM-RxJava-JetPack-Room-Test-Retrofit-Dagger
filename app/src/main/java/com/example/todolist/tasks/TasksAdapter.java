@@ -1,6 +1,7 @@
 package com.example.todolist.tasks;
 
 import android.annotation.SuppressLint;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.EmployeeView
     //make interface like this
     public interface OnItemClicked {
         void onItemClick(Tasks tasks);
+        void onItemLongClick(Tasks tasks);
     }
 
     @NonNull
@@ -88,9 +90,17 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.EmployeeView
 //            firstCharacterTv.setText(tasks.getId());
             test.setText(tasks.getContent());
             test.setOnClickListener(v->onClick.onItemClick(tasks));
+            test.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    onClick.onItemLongClick(tasks);
+                    return false;
+                }
+            });
 
             if (tasks.isDone()){
                 test.setChecked(true);
+                test.setPaintFlags(test.getPaintFlags() |   Paint.STRIKE_THRU_TEXT_FLAG);
                 done_Tasks++;
             }
 
